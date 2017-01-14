@@ -1,0 +1,75 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#808080"
+    tools:context="projekt.secguard.LoginActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="111dp"
+            android:layout_weight="0.13" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:weightSum="1">
+
+            <TextView
+                android:text="Login"
+                android:layout_marginRight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_login"
+                android:textSize="45sp"
+                 />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/et_login" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:textAlignment="center">
+
+            <TextView
+                android:text="Haslo"
+                android:layout_width="139dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_pass"
+                android:textSize="45sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/et_pass" />
+
+        </LinearLayout>
+
+        <Button
+            android:text="Zaloguj"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:id="@+id/button_login" />
+
+    </LinearLayout>
+
+</FrameLayout>

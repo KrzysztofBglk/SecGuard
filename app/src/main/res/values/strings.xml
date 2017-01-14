@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SecGuard</string>
+
+    <string name="title_activity_login">Ochroniarz</string>
+    <string name="loginButon">Login</string>
+    <string name="loginTitle">Ochroniarz</string>
 </resources>
