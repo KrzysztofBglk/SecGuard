@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Dialog
+            // Dialog masg
             pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
