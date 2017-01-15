@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-
+/** Polaczenie HTTP z serwerem zdalnym */
 public class HttpHandler {
 
     private static final String TAG = HttpHandler.class.getSimpleName();

@@ -1,15 +1,22 @@
 package projekt.secguard;
 
-/**
- * Created by Rimen on 14.01.2017.
- */
 
+/** Przechowywanie danych o zalogowanym userze */
 public class UserData {
+
     private String login; //nazwa usera
     private String imie; // imie pracownika
     private String nazwisko; //nazwisko pracownika
     private String firma; // podstawowa firma przypisana do pracownika
     private String status; // status[admin,manager,pracownik]
+
+    public UserData(String firma, String imie, String login, String nazwisko, String status) {
+        this.firma = firma;
+        this.imie = imie;
+        this.login = login;
+        this.nazwisko = nazwisko;
+        this.status = status;
+    }
 
     public String getFirma() {
         return firma;

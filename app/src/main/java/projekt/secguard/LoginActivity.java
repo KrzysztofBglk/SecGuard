@@ -1,40 +1,40 @@
 package projekt.secguard;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
+
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Logowanie do aplikacji + pobranie danych o userze
+ */
 public class LoginActivity extends AppCompatActivity {
-    /** Main menu intent*/
-    Intent intentMainMenu = new Intent(this, MainActivity.class);
-    /** Remote data*/
+
     String url = "http://185.28.100.205/login.php?login=";
     String url_pass = "&pass=";
     private ProgressDialog pDialog;
     private String TAG = MainActivity.class.getSimpleName();
-    /** -- */
 
     Button btLogin; // button do logowania
-    EditText etLogin,etPass; // pola do logowania
-    String login,pass;
+    EditText etLogin, etPass; // pola do logowania
+    String login, pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        etLogin = (EditText)findViewById(R.id.et_login);
-        etPass =(EditText)findViewById(R.id.et_pass);
+        etLogin = (EditText) findViewById(R.id.et_login);
+        etPass = (EditText) findViewById(R.id.et_pass);
         btLogin = (Button) findViewById(R.id.button_login);
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,82 +43,88 @@ public class LoginActivity extends AppCompatActivity {
                 pass = etPass.getText().toString();
                 url = url + login + url_pass + pass;
                 new LogIn().execute();
+                etLogin.setText("");
+                etPass.setText("");
             }
         });
-
-
     }
+
+    /**
+     * Odpakowanie JSONa
+     */
     private class LogIn extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Showing progress dialog
+            // Dialog
             pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("Please wait...");
+            pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
             pDialog.show();
-
         }
 
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
 
-            // Request
+            // Request na serwer
             String jsonStr = sh.makeServiceCall(url);
 
-            Log.e(TAG, "Response from url: " + jsonStr); // debug response
+            //Log.e(TAG, "Odebrano: " + jsonStr);
 
-            if (jsonStr != null) {
-                try {
-                    JSONArray json = new JSONArray(jsonStr);
+                if (jsonStr != null) {
+                    try {
 
-                    /*
-                    TODO ODPAKOWANIE JSONA !
+                        // Przetwarzanie JSON => UserData.class
+                        JSONArray daneUsera = new JSONArray(jsonStr);
+                        JSONObject o = daneUsera.getJSONObject(0); // 0 or 1
 
-                     */
-                    //int id = json.getString("id"); // error
+                        String id = o.getString("id");
+                        String login = o.getString("login");
+                        String pass = o.getString("pass");
+                        String test = "test";
+                        UserData data = new UserData(test, test, test, test, test);
+                        finish();
 
+                    } catch (final JSONException e) {
+                        Log.e(TAG, "Json parsing error: " + e.getMessage());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Niepoprawne dane logowania",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
+                } else {
+                    Log.e(TAG, "Problem z serwerem.");
 
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
+                                    "Server error, Zobacz LogCat po wiecej informacji",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
+
                 }
 
-
-/*       error?
-
-                startActivity(intentMainMenu); // if login != null(dane poprawne) => main menu
-                finish();
-
-*/
-
-            } else {
-                Log.e(TAG, "Blad pobierania danych z serwera!");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Blad, LogCat zawiera crash report",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-            }
             return null;
         }
 
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
         }
-
+    }
 }
 
 
