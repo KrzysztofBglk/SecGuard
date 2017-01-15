@@ -49,6 +49,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override // zapobiega cofaniu do main menu z poziomu logowania
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
+
     /**
      * Odpakowanie JSONa
      */
