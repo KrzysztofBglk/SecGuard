@@ -21,7 +21,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     String url = "http://185.28.100.205/login.php?login=";
-    String url_pass = "&pass=";
+    String url_pass = "&haslo=";
     private ProgressDialog pDialog;
     private String TAG = MainActivity.class.getSimpleName();
 
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         String id = o.getString("id");
                         String login = o.getString("login");
-                        String pass = o.getString("pass");
+                        String haslo = o.getString("haslo");
                         String test = "test";
                         UserData data = new UserData(test, test, test, test, test);
                         finish();
