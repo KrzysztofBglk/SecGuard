@@ -1,6 +1,7 @@
 package projekt.secguard;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -93,8 +94,10 @@ public class LoginActivity extends AppCompatActivity {
                         String nazwisko = o.getString("nazwisko");
                         String pozycja = o.getString("pozycja");
                         String status = o.getString("status");
-                        String test = "test";
-                        UserData data = new UserData(test, test, test, test, test);
+                        UserData data = new UserData(Integer.parseInt(id), login, haslo, imie, nazwisko, pozycja, Boolean.parseBoolean(status));
+
+                        Intent userData = new Intent();
+                        userData.putExtra("userData", data);
                         finish();
 
                     } catch (final JSONException e) {

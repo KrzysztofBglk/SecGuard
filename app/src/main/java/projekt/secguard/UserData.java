@@ -1,60 +1,70 @@
 package projekt.secguard;
 
 
-/** Przechowywanie danych o zalogowanym userze */
-public class UserData {
+import java.io.Serializable;
 
+/** Przechowywanie danych o zalogowanym userze */
+public class UserData implements Serializable{
+
+    private int id;
     private String login; //nazwa usera
-    private String imie; // imie pracownika
+    private String haslo; //haslo usera
+    private String imie; //imie pracownika
     private String nazwisko; //nazwisko pracownika
-    private String firma; // podstawowa firma przypisana do pracownika
-    private String status; // status[admin,manager,pracownik]
+    private String pozycja; //stanowisko
+    private Boolean status; //czy konto jest aktywne?
  //test
-    public UserData(String firma, String imie, String login, String nazwisko, String status) {
-        this.firma = firma;
-        this.imie = imie;
+    public UserData(int id, String login, String haslo, String imie, String nazwisko, String pozycja, Boolean status) {
+        this.id = id;
         this.login = login;
+        this.haslo = haslo;
+        this.imie = imie;
         this.nazwisko = nazwisko;
+        this.pozycja = pozycja;
         this.status = status;
     }
 
-    public String getFirma() {
-        return firma;
+    public int getId() {
+        return id;
     }
-
-    public void setFirma(String firma) {
-        this.firma = firma;
-    }
-
-    public String getNazwisko() {
-        return nazwisko;
-    }
-
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-    }
-
     public String getLogin() {
         return login;
     }
-
-    public void setLogin(String login) {
-        this.login = login;
+    public String getHaslo() {
+        return haslo;
     }
-
     public String getImie() {
         return imie;
     }
-
-    public void setImie(String imie) {
-        this.imie = imie;
+    public String getNazwisko() {
+        return nazwisko;
     }
-
-    public String getStatus() {
+    public String getPozycja() {
+        return pozycja;
+    }
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    public void setHalo(String haslo) {
+        this.haslo = haslo;
+    }
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+    public void setPozycja(String pozycja) {
+        this.pozycja = pozycja;
+    }
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }

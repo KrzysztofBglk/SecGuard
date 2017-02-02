@@ -15,7 +15,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true">
+        android:weightSum="1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
 
+        <ImageView
+            android:layout_width="167dp"
+            android:layout_height="161dp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imageView4"
+            android:layout_weight="0.02" />
     </LinearLayout>
 </RelativeLayout>
