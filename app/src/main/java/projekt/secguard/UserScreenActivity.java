@@ -14,8 +14,6 @@ public class UserScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_screen);
 
 
-
-
         final TextView userLogin = (TextView) findViewById(R.id.textLogin);
         final TextView userNames = (TextView) findViewById(R.id.textNames);
 
@@ -23,7 +21,5 @@ public class UserScreenActivity extends AppCompatActivity {
         final UserData userData = (UserData) intent.getExtras().getSerializable("userData");
         userLogin.setText("@"+userData.getLogin());
         userNames.setText(userData.getImie()+" "+userData.getNazwisko());
-
-
     }
 }
