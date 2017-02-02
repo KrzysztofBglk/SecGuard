@@ -96,8 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                         String status = o.getString("status");
                         UserData data = new UserData(Integer.parseInt(id), login, haslo, imie, nazwisko, pozycja, Boolean.parseBoolean(status));
 
-                        Intent userData = new Intent();
-                        userData.putExtra("userData", data);
+                        Intent intent = new Intent(getApplicationContext(), UserScreenActivity.class);
+                        intent.putExtra("userData", data);
+
+                        startActivity(intent);
                         finish();
 
                     } catch (final JSONException e) {
