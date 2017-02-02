@@ -9,7 +9,7 @@ public class UserData {
     private String nazwisko; //nazwisko pracownika
     private String firma; // podstawowa firma przypisana do pracownika
     private String status; // status[admin,manager,pracownik]
-
+ //test
     public UserData(String firma, String imie, String login, String nazwisko, String status) {
         this.firma = firma;
         this.imie = imie;
