@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (jsonStr != null) {
                     try {
 
-                        // Przetwarzanie JSON => UserData.class
+                        // Przetwarzanie JSON => UserData.class;
                         JSONArray daneUsera = new JSONArray(jsonStr);
                         JSONObject o = daneUsera.getJSONObject(0); // 0 or 1
 
