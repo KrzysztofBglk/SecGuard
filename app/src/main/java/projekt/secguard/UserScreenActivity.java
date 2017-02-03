@@ -13,18 +13,22 @@ public class UserScreenActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private TextView userLogin;
+    private TextView userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_screen);
-        final TextView userLogin = (TextView) findViewById(R.id.textLogin);
-        final TextView userNames = (TextView) findViewById(R.id.textNames);
+        userLogin = (TextView) findViewById(R.id.textLogin);
+        userName = (TextView) findViewById(R.id.textNames);
+
+        // Uzyskiwanie danych o logowaniu z klasy UserData
         Intent intent = getIntent();
         final UserData userData = (UserData) intent.getExtras().getSerializable("userData");
         userLogin.setText("@"+userData.getLogin());
-        userNames.setText(userData.getImie()+" "+userData.getNazwisko());
-
+        userName.setText(userData.getImie()+" "+userData.getNazwisko());
 
 
         // Boczne menu
@@ -41,8 +45,6 @@ public class UserScreenActivity extends AppCompatActivity {
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 }

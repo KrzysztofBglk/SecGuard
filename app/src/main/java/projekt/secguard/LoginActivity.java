@@ -19,6 +19,7 @@ import android.widget.Toast;
 /**
  * Logowanie do aplikacji + pobranie danych o userze
  */
+
 public class LoginActivity extends AppCompatActivity {
 
     String url = "http://185.28.100.205/login.php?login=";
@@ -50,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override // zapobiega cofaniu do main menu z poziomu logowania
+    // zapobiega cofaniu do main menu z poziomu logowania
+    @Override
     public void onBackPressed() {
         this.finishAffinity();
     }
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Dialog masg
+            // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
             pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
@@ -133,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
         }
