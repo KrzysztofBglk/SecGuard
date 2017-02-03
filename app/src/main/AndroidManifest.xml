@@ -22,8 +22,15 @@
             android:name=".LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity android:name=".UserScreenActivity"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".UserScreenActivity" />
+        <activity android:name=".ProfileEditActivity" />
+        <activity android:name=".AdminProfilesEditActivity" />
+        <activity android:name=".AdminAddDataActivity" />
+        <activity android:name=".AdminOrdersActivity" />
+        <activity android:name=".AdminFinishedOrdersActivity" />
+        <activity android:name=".UserOrdersTableActivity" />
+        <activity android:name=".UserTrackerActivity"></activity>
     </application>
 
 </manifest>
