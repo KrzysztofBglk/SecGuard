@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/test1"
-        android:title="test1"/>
-    <item android:id="@+id/test2"
-        android:title="test2"/>
-    <item android:id="@+id/test3"
-        android:title="test3"/>
-    <item android:id="@+id/test4"
-        android:title="test4"/>
+    <!--Dla wszystkich-->
+    <item android:id="@+id/menu_profile"
+        android:icon="@drawable/myprofile"
+        android:title="Mój profil"/>
 
 
+    <!--Dla menagera-->
+    <item android:id="@+id/menu_editUsers"
+        android:icon="@drawable/profile"
+        android:title="Edytuj profile"/>
 
+    <item android:id="@+id/menu_menageObjects"
+        android:icon="@drawable/obiekty"
+        android:title="Zarzadzaj obiektami"/>
+
+    <item android:id="@+id/menu_orders"
+        android:icon="@drawable/zlecenia"
+        android:title="Dodaj zlecenia"/>
+
+    <item android:id="@+id/menu_finishedOrders"
+        android:icon="@drawable/raporty"
+        android:title="Raporty"/>
+
+
+    <!--Dla pracownika-->
+    <item android:id="@+id/menu_myOrders"
+        android:icon="@drawable/grafik"
+        android:title="Mój Grafik"/>
+
+    <item android:id="@+id/menu_tracking"
+        android:icon="@drawable/tracking"
+        android:title="Tracking"/>
+
+
+    <!--Dla wszystkich-->
+    <item android:id="@+id/menu_editProfile"
+        android:icon="@drawable/edytujprofil"
+        android:title="Edytuj profil"/>
+
+    <item android:id="@+id/menu_exit"
+        android:icon="@drawable/exit"
+        android:title="Wyloguj"/>
 
 </menu>
