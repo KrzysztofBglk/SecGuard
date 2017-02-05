@@ -54,7 +54,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.12">
+            android:layout_weight="0.12"
+            android:weightSum="1">
 
             <TextView
                 android:text="Dane:"
@@ -73,11 +74,27 @@
 
         </LinearLayout>
 
-        <TextView
-            android:text="TextView"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/testowe" />
+            android:layout_height="34dp"
+            android:layout_weight="0.02">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:id="@+id/textView"
+                android:text="  Stanowisko:  " />
+
+            <TextView
+                android:text="DEV_RANK"
+                android:layout_width="351dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textRank"
+                android:textSize="24sp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -90,8 +107,6 @@
         android:layout_gravity="start">
 
     </android.support.design.widget.NavigationView>
-
-    
 
 
 </android.support.v4.widget.DrawerLayout>

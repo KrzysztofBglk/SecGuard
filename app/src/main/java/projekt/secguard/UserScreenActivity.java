@@ -17,7 +17,7 @@ public class UserScreenActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private TextView userLogin;
     private TextView userName;
-    private TextView test;
+    private TextView userRank;
     private UserData userData;
 
     NavigationView navigationView;
@@ -28,13 +28,13 @@ public class UserScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_screen);
         userLogin = (TextView) findViewById(R.id.textLogin);
         userName = (TextView) findViewById(R.id.textNames);
-        test = (TextView) findViewById(R.id.testowe);
+        userRank = (TextView) findViewById(R.id.textRank);
         // Uzyskiwanie danych o logowaniu z klasy UserData
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().getSerializable("userData");
         userLogin.setText(userData.getLogin());
         userName.setText(userData.getImie()+" "+userData.getNazwisko());
-        test.setText(userData.getPozycja());
+        userRank.setText(userData.getPozycja());
 
         // Boczne menu
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
