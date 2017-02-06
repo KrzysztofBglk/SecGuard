@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--Dla wszystkich-->
-    <item android:id="@+id/menu_profile"
+  <!--  <item android:id="@+id/menu_profile"
         android:icon="@drawable/myprofile"
         android:title="Mój profil"/>
-
+-->
 
     <!--Dla menagera-->
     <item android:id="@+id/menu_editUsers"
