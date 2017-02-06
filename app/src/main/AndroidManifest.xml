@@ -30,7 +30,8 @@
         <activity android:name=".AdminOrdersActivity" />
         <activity android:name=".AdminFinishedOrdersActivity" />
         <activity android:name=".UserOrdersTableActivity" />
-        <activity android:name=".UserTrackerActivity"></activity>
+        <activity android:name=".UserTrackerActivity" />
+        <activity android:name=".UsersListActivity"></activity>
     </application>
 
 </manifest>
