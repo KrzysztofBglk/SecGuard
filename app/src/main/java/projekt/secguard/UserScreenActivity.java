@@ -82,6 +82,7 @@ public class UserScreenActivity extends AppCompatActivity {
                         return true;
                     case R.id.menu_editProfile:
                         Intent editProfile = new Intent(getApplicationContext(), ProfileEditActivity.class);
+                        editProfile.putExtra("userData", userData);
                         startActivity(editProfile);
                         return true;
                     default:
