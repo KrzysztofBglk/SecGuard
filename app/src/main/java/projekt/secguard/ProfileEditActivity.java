@@ -77,7 +77,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 }
             }
         });
-
+        
         buttonEdFname = (Button) findViewById(R.id.button2);
         buttonEdFname.setOnClickListener(new View.OnClickListener() {
                 @Override
