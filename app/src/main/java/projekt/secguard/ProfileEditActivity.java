@@ -28,9 +28,8 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     private Button buttonEdPass, buttonEdFname, buttonEdSname;
 
-    String url = "http://185.28.100.205/login.php?login=";
+    String url;
     String url_pass = "&pass=";
-    String condition = "&cond=";
     String param = "&param=";
     String login, pass;
     private ProgressDialog pDialog;
@@ -56,7 +55,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         userLogin.setText(userData.getLogin());
         userName.setText(userData.getImie() + " " + userData.getNazwisko());
         userRank.setText(userData.getPozycja());
-        final HttpHandler sh = new HttpHandler();
 
 
         login = userData.getLogin();
@@ -70,51 +68,31 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (passwordConditions(edPassCurrent.getText().toString(), edPass.getText().toString())) {
                     //Wysłanie polecenia zmiany bieżącego hasła konta(nowe hasło to wartość pola edPass
-                    url = url + login + url_pass + pass + condition + "changePass" + param + edPass.getText().toString();
 
+                    url = "http://185.28.100.205/ch_pass.php?login=";
 
-                    String jsonStr = sh.makeServiceCall(url);
+                    url = url + login + url_pass + pass + param + edPass.getText().toString();
 
-                    if(serverRequest(jsonStr) == true)
-                    {
-                        Toast.makeText(getApplicationContext(),
-                                "Poprawnie zmieniono hasło.",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Niepoprawne imie",
-                            Toast.LENGTH_LONG)
-                            .show();
+                    new pushChange().execute();
                 }
             }
         });
 
         buttonEdFname = (Button) findViewById(R.id.button2);
         buttonEdFname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (namesConditions(edFName.getText().toString())) {
-                    //Wysłanie polecenia zmiany bieżącego imienia
-                    url = url + login + url_pass + pass + condition + "changeFName" + param + edFName.getText().toString();
+                @Override
+                public void onClick (View v) {
+                    if (namesConditions(edFName.getText().toString())) {
+                        //Wysłanie polecenia zmiany bieżącego imienia
 
-                    String jsonStr = sh.makeServiceCall(url);
+                        url = "http://185.28.100.205/ch_fname.php?login=";
 
-                    if(serverRequest(jsonStr) == true)
-                    {
-                        Toast.makeText(getApplicationContext(),
-                                "Poprawnie zmieniono imię.",
-                                Toast.LENGTH_LONG)
-                                .show();
+                        url = url + login + url_pass + pass + param + edFName.getText().toString();
+
+                        new pushChange().execute();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Niepoprawne imie",
-                            Toast.LENGTH_LONG)
-                            .show();
                 }
-            }
+
         });
 
         buttonEdSname = (Button) findViewById(R.id.button3);
@@ -123,22 +101,12 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (namesConditions(edSName.getText().toString())) {
                     //Wysłanie polecenia zmiany bieżącego nazwiska
-                    url = url + login + url_pass + pass + condition + "changeSName" + param + edSName.getText().toString();
 
-                    String jsonStr = sh.makeServiceCall(url);
+                    url = "http://185.28.100.205/ch_sname.php?login=";
 
-                    if(serverRequest(jsonStr) == true)
-                    {
-                        Toast.makeText(getApplicationContext(),
-                                "Poprawnie zmieniono nazwisko.",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Niepoprawne imie",
-                            Toast.LENGTH_LONG)
-                            .show();
+                    url = url + login + url_pass + pass + param + edSName.getText().toString();
+
+                    new pushChange().execute();
                 }
             }
         });
@@ -182,50 +150,93 @@ public class ProfileEditActivity extends AppCompatActivity {
         return true;
     }
 
-    Boolean serverRequest(String jsonStr)
-    {
-        if (jsonStr != null) {
-            try {
-                // Przetwarzanie JSON
-                JSONArray msg = new JSONArray(jsonStr);
-                JSONObject o = msg.getJSONObject(0); // 0 or 1
 
-                String data = o.getString("msg");
 
-                if(data.compareTo("SUCCESS") == 0)
-                {
-                    return true;
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
+
+    /**
+     * Odpakowanie JSONa
+     */
+    private class pushChange extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
+            pDialog = new ProgressDialog(ProfileEditActivity.this);
+            pDialog.setMessage("Przetwarzanie...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Request na serwer
+            String jsonStr = sh.makeServiceCall(url);
+
+            //Log.e(TAG, "Odebrano: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+
+                    // Przetwarzanie JSON => UserData.class
+                    JSONArray daneUsera = new JSONArray(jsonStr);
+                    JSONObject o = daneUsera.getJSONObject(0); // 0 or 1
+
+                    String id = o.getString("id_user");
+                    String login = o.getString("login");
+                    String haslo = o.getString("haslo");
+                    String imie = o.getString("imie");
+                    String nazwisko = o.getString("nazwisko");
+                    String pozycja = o.getString("pozycja");
+                    String status = o.getString("status");
+                    UserData data = new UserData(Integer.parseInt(id), login, haslo, imie, nazwisko, pozycja, Boolean.parseBoolean(status));
+
+                    Intent intent = new Intent(getApplicationContext(), UserScreenActivity.class);
+                    intent.putExtra("userData", data);
+
+                    startActivity(intent);
+                    finish();
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Niepoprawne dane logowania 2",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
                 }
+            } else {
+                Log.e(TAG, "Problem z serwerem.");
 
-
-            } catch (final JSONException e) {
-                Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "Niepoprawne dane logowania",
+                                "Server error, Zobacz LogCat po wiecej informacji",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
-
                 });
-                return false;
             }
-        } else {
-            Log.e(TAG, "Problem z serwerem.");
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(),
-                            "Server error, Zobacz LogCat po wiecej informacji",
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
-            });
-            return false;
+            return null;
         }
-        return false;
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+        }
     }
 }
+
