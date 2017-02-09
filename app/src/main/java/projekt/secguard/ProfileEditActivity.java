@@ -78,7 +78,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
 
-        
+
         buttonEdFname = (Button) findViewById(R.id.button2);
         buttonEdFname.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -115,18 +115,31 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     Boolean passwordConditions(String currentPass, String newPass) //warunki określające prawidłową formę hasła - jeżeli wszystko zostanie spełnione zostanie zwrócona wartość true i zostanie umożliwione wciśnięcie przycisku powodującego edycję i wysłanie polecenia SQL
     {
-        if (currentPass.compareTo(newPass) == 0)
+        if (currentPass.compareTo(newPass) == 0) {
+            Toast.makeText(getApplicationContext(),
+                    "Hasła nie różnią się.",
+                    Toast.LENGTH_LONG)
+                    .show();
             return false;
+        }
 
-        if (newPass.length() < 5)
+        if (newPass.length() < 5) {
+            Toast.makeText(getApplicationContext(),
+                    "Hasło jest za krótkie.",
+                    Toast.LENGTH_LONG)
+                    .show();
             return false;
+        }
 
-        if (newPass.length() > 25)
-            return false;
 
         //Jeżeli hasło wpisane w polu aktualne hasło nie zgadza się z hasłem aktualnie zalogowanego użytkownika, zwróć false
-        if (currentPass.compareTo(userData.getHaslo()) != 0)
+        if (currentPass.compareTo(userData.getHaslo()) != 0){
+            Toast.makeText(getApplicationContext(),
+                    "Niepoprawne hasło bieżące.",
+                    Toast.LENGTH_LONG)
+                    .show();
             return false;
+        }
 
 
         return true;
@@ -134,17 +147,37 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     Boolean namesConditions(String name)  //warunki określające prawidłową formę imienia oraz nazwiska - jeżeli wszystko zostanie spełnione zostanie zwrócona wartość true i zostanie umożliwione wciśnięcie przycisku powodującego edycję i wysłanie polecenia SQL
     {
-        if (name.length() < 2)
+        if (name.length() < 2){
+            Toast.makeText(getApplicationContext(),
+                    "Imię za krótkie.",
+                    Toast.LENGTH_LONG)
+                    .show();
             return false;
+        }
 
-        if (name.length() > 55)
+        if (name.length() > 55){
+            Toast.makeText(getApplicationContext(),
+                    "Imię za długie.",
+                    Toast.LENGTH_LONG)
+                    .show();
             return false;
+        }
 
+        //65-90 97-123
         //Warunek sprawdzajacy czy kazdy znak wpisanego imienia/nazwiska miesci sie w wartosci znakow alfabetycznych tablicy znakow ASCII
         for (int i = 0; i < name.length(); i++) {
             //Słownie - jeżeli znak nie mieści się pomiędzy wartością 65 a 90 - I - nie mieści się pomiędzy wartością 97 a 123 to ->
-            if ((!((name.toCharArray()[i] > 65) && (name.toCharArray()[i] < 90))) && (!((name.toCharArray()[i] > 97) && (name.toCharArray()[i] < 123))))
+            if ( ((name.toCharArray()[i]>65) && (name.toCharArray()[i]<90)) || ((name.toCharArray()[i] > 97) && (name.toCharArray()[i] < 123)) ){
+                return true;
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),
+                        "Niepoprawne znaki!",
+                        Toast.LENGTH_LONG)
+                        .show();
                 return false;
+            }
         }
 
 
