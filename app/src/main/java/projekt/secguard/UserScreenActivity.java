@@ -58,6 +58,7 @@ public class UserScreenActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.menu_editUsers:
                         Intent editUsers = new Intent(getApplicationContext(), AdminProfilesEditActivity.class);
+                        editUsers.putExtra("userData", userData);
                         startActivity(editUsers);
                         return true;
                     case R.id.menu_menageObjects:
