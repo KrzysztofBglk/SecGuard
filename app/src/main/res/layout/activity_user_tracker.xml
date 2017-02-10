@@ -10,13 +10,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="projekt.secguard.UserTrackerActivity">
 
-    <TextView
-        android:text="TextView"
+    <Button
+        android:text="GPS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="129dp"
-        android:id="@+id/textView10" />
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="104dp"
+        android:textSize="24sp"
+        android:id="@+id/button_startTracking" />
+
+    <TextView
+        android:text="gps data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_startTracking"
+        android:layout_alignEnd="@+id/button_startTracking"
+        android:layout_marginEnd="13dp"
+        android:layout_marginTop="71dp"
+        android:textSize="24sp"
+        android:id="@+id/text_gpsData" />
 </RelativeLayout>
