@@ -25,9 +25,15 @@
             android:layout_height="113dp"
             android:layout_weight="0.97">
 
+            <Button
+                android:text="Wybierz użytkownika"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button4" />
+
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="212dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -56,11 +62,6 @@
 
             </LinearLayout>
 
-            <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/listView"
-                android:layout_width="172dp"
-                android:layout_height="wrap_content" />
-
         </LinearLayout>
 
         <TextView
@@ -68,19 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView26" />
-
-        <TextView
-            android:text="Wpisz bierzące hasło:"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView27" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/editText9" />
 
         <TextView
             android:text="Wpisz nowe hasło:"

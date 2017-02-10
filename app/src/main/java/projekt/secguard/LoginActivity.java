@@ -31,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText etLogin, etPass; // pola do logowania
     String login, pass;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
