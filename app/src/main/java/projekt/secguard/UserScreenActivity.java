@@ -86,6 +86,10 @@ public class UserScreenActivity extends AppCompatActivity {
                         editProfile.putExtra("userData", userData);
                         startActivity(editProfile);
                         return true;
+                    case R.id.menu_exit:
+                        Intent exit = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(exit);
+                        return true;
                     default:
                         return true;
                 }
