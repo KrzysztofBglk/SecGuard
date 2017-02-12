@@ -147,7 +147,7 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
 
             HttpHandler getAll = new HttpHandler();
-            String urlComanyNames = "http://185.28.100.205/getAllCompanyNames.php";
+            String urlComanyNames = "http://185.28.100.205/getAllCompanyNames.php?hashcode=J1f2sa0sdi3Awj349";
 
             // Request na serwer
             String jsonStr = getAll.makeServiceCall(urlComanyNames);
