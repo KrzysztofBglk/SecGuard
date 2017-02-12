@@ -2,8 +2,6 @@ package projekt.secguard;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.SystemClock;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,14 +68,13 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
     }
 
     Boolean valid_name(String name) {
-        if(!name.equals(companyData.get(selector).getHold_name())){
-            if(name.length() !=0 && name.length() <25){
-                if(name.matches("[a-zA-Z]+")){
-                    return true;
-                }
-            }
+        if((name.length() !=0 && name.length() <25) &&(name.matches("[a-zA-Z_\\s]+"))){
+            return true;
+        }else{
+            Toast.makeText(getApplicationContext(), "Nazwa: " + name +" nie jest poprawna!", Toast.LENGTH_LONG).show();
+            return false;
         }
-        return false;
+
     }
 
     Boolean valid_phone(String phone) {
@@ -90,21 +87,19 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
             }
             return true;
         }
+        Toast.makeText(getApplicationContext(), "Telefon: " + phone +" nie jest poprawny!", Toast.LENGTH_LONG).show();
         return false;
     }
 
 
     Boolean valid_kontakt(String name) {
-        if(!name.equals(companyData.get(selector).getHold_name())){
-            if(name.length() !=0 && name.length() <25){
-                if(name.matches("[a-zA-Z_\\s]+")){
-                    return true;
-                }
-            }
+        if((name.length() != 0 && name.length() < 25) && (name.matches("[a-zA-Z_\\s]+"))){
+            return true;
+        }else{
+            Toast.makeText(getApplicationContext(), "Osoba: " + name +" nie jest poprawna!", Toast.LENGTH_LONG).show();
+            return false;
         }
-        return false;
     }
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
@@ -119,23 +114,14 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
-       // AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-   //     selector = info.position;
         selector = item.getItemId();
 
-/*        Toast.makeText(getApplicationContext(),
-                selector,
-                Toast.LENGTH_LONG)
-                .show();
-*/
         edit_name.setText(companyData.get(selector).getHold_name());
         edit_phone.setText(companyData.get(selector).getHold_phone());
         edit_kontakt.setText(companyData.get(selector).getHold_kontakt());
         dbase_id = companyData.get(selector).getHold_id();
         return true;
     }
-
 
 
     private class getAll extends AsyncTask<Void, Void, Void> {
@@ -154,6 +140,7 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
 
             HttpHandler getAll = new HttpHandler();
+
             // hash code zabezpiecza przed wyciekiem danych z serwera
             String urlCompanyData = "http://185.28.100.205/getAllCompany.php?hashcode=J1f2sa0sdi3Awj349";
 
@@ -226,15 +213,13 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
              String edited_name_modded = edited_name.replaceAll(" ", "%20");
              String edited_kontakt_modded = edited_kontakt.replaceAll(" ", "%20");
 
-            String urlInsert = "http://185.28.100.205/updateCompany.php?hashcode=J1f2sa0sdi3Awj349&nazwa=" + edited_name_modded + "&telefon=" + edited_phone + "&kontakt=" + edited_kontakt_modded + "&id=" + dbase_id;
-            String geting = insert.makeServiceCall(urlInsert);
+            String urlUpdate = "http://185.28.100.205/updateCompany.php?hashcode=J1f2sa0sdi3Awj349&nazwa=" + edited_name_modded + "&telefon=" + edited_phone + "&kontakt=" + edited_kontakt_modded + "&id=" + dbase_id;
+            String geting = insert.makeServiceCall(urlUpdate);
             Log.e(TAG, "Odebrano: " + geting);
             return null;
         }
     }
-
-
-
+    
 
     private class DataHolder
     {
