@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_admin_add_company"
+    android:layout_width="match_parent"
+    android:background="#808080"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="projekt.secguard.AdminAddCompanyActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="Wprowadz nazwę nowej firmy..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView17"
+            android:textSize="20sp"
+            android:textColor="@android:color/background_light" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:layout_height="70sp">
+
+            <TextView
+                android:text="Nazwa:"
+                android:textSize="30sp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/txt_addcompany"
+                android:layout_weight="0.29"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/et_add_name"
+                android:layout_width="193dp"
+                android:layout_weight="0.60" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="Sprawdz w bazie nazwę"
+                android:layout_width="242dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_check"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:text="Status..."
+                android:layout_width="match_parent"
+                android:layout_marginLeft="25sp"
+                android:layout_height="32dp"
+                android:id="@+id/txt_status"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            android:text="Wprowadz telefon kontaktowy..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView18"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <TextView
+                android:text="Telefon:"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView14"
+                android:layout_weight="1"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/et_add_phone"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:text="Wprowadz obobe kontaktowa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView20"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <TextView
+                android:text="Kontakt:"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView15"
+                android:layout_weight="1"
+                android:textColor="@color/colorAccent" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/et_add_osobaKontaktowa"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <Button
+            android:text="Dodaj..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_add"
+            android:background="@color/backgroundButton" />
+
+    </LinearLayout>
+</RelativeLayout>
