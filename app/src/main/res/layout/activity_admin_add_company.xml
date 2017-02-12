@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView17"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@android:color/background_light" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -68,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="25sp"
                 android:layout_height="32dp"
-                android:id="@+id/textView27"
+                android:id="@+id/txt_status"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -140,5 +141,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_add"
             android:background="@color/backgroundButton" />
+
     </LinearLayout>
 </RelativeLayout>
