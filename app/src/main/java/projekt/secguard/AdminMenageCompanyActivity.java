@@ -29,7 +29,7 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
     Button button_modify;
     ProgressDialog pDialog;
     int selector;
-
+    String dbase_id;
     String edited_name;
     String edited_phone;
     String edited_kontakt;
@@ -132,6 +132,7 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
         edit_name.setText(companyData.get(selector).getHold_name());
         edit_phone.setText(companyData.get(selector).getHold_phone());
         edit_kontakt.setText(companyData.get(selector).getHold_kontakt());
+        dbase_id = companyData.get(selector).getHold_id();
         return true;
     }
 
@@ -225,7 +226,7 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
              String edited_name_modded = edited_name.replaceAll(" ", "%20");
              String edited_kontakt_modded = edited_kontakt.replaceAll(" ", "%20");
 
-            String urlInsert = "http://185.28.100.205/updateCompany.php?nazwa=" + edited_name_modded + "&telefon=" + edited_phone + "&kontakt=" + edited_kontakt_modded;
+            String urlInsert = "http://185.28.100.205/updateCompany.php?hashcode=J1f2sa0sdi3Awj349&nazwa=" + edited_name_modded + "&telefon=" + edited_phone + "&kontakt=" + edited_kontakt_modded + "&id=" + dbase_id;
             String geting = insert.makeServiceCall(urlInsert);
             Log.e(TAG, "Odebrano: " + geting);
             return null;
