@@ -81,7 +81,9 @@ public class LocationData implements Serializable{
         return startData;
     }
 
-    public int[] setStartData(int[] start_data) {
+
+   // ZMIANA public int na void bo nie dalo sie kompilowac
+   void setStartData(int[] start_data) {
         this.startData = start_data;
     }
 

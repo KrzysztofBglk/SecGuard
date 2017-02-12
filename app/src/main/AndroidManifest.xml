@@ -34,7 +34,8 @@
         <activity android:name=".UserOrdersTableActivity" />
         <activity android:name=".UserTrackerActivity" />
         <activity android:name=".UsersListActivity" />
-        <activity android:name=".ProfileListViewActivity"></activity>
+        <activity android:name=".ProfileListViewActivity" />
+        <activity android:name=".AdminAddCompanyActivity"></activity>
     </application>
 
 </manifest>
