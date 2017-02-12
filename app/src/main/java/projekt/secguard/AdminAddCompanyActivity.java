@@ -208,7 +208,8 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             HttpHandler insert = new HttpHandler();
             String get_osoba_modded = get_osoba.replaceAll(" ", "%20");
-            String urlInsert = "http://185.28.100.205/insertCompany.php?nazwa=" + get_nazwa + "&telefon=" + get_telefon + "&kontakt=" + get_osoba_modded;
+            String get_nazwa_modded = get_nazwa.replaceAll(" ", "%20");
+            String urlInsert = "http://185.28.100.205/insertCompany.php?nazwa=" + get_nazwa_modded + "&telefon=" + get_telefon + "&kontakt=" + get_osoba_modded;
             String geting = insert.makeServiceCall(urlInsert);
             Log.e(TAG, "Odebrano: " + geting);
             return null;

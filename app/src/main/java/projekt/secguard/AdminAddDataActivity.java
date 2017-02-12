@@ -38,8 +38,8 @@ public class AdminAddDataActivity extends AppCompatActivity {
         menageCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //intent
+                Intent intentMenageCompany = new Intent(getApplicationContext(), AdminMenageCompanyActivity.class);
+                startActivity(intentMenageCompany);
             }
         });
         addObjects.setOnClickListener(new View.OnClickListener() {
