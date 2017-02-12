@@ -62,6 +62,10 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
                 edited_kontakt = edit_kontakt.getText().toString();
                 if( (valid_name(edited_name) == true) && (valid_phone(edited_phone) == true) && (valid_kontakt(edited_kontakt) == true) ){
                     new updateCompany().execute();
+                   // edit_name.setText("");
+                   // edit_phone.setText("");
+                   // edit_kontakt.setText("");
+                    Toast.makeText(getApplicationContext(), "Wykonano update w bazie!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -219,7 +223,7 @@ public class AdminMenageCompanyActivity extends AppCompatActivity {
             return null;
         }
     }
-    
+
 
     private class DataHolder
     {
