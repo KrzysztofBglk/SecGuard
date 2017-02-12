@@ -8,33 +8,49 @@ import java.io.Serializable;
 
 public class LocationData implements Serializable{
 
+    private int id;
     private String nazwa;
     private String nr_ulicy;
     private String ulica;
     private String miasto;
     private int idTyp;
     private int idZlec;
-    private int[] startData; //[dd][mm][yy]
-    private int[] stopData;  //jw.
-    private int[][] godziny;
+    private int[] startData = new int[3]; //[dd][mm][yy]
+    private int[] stopData = new int[3];  //jw.
+    private Boolean[] godziny = new Boolean[104]; //104 kafelki doby po 15 minut od 00:00
     private int ilOchroniarzy;
 
     void addGodzina(int h, int m)
     {
-        Boolean flag = true;
-        for(int i = 0;i<godziny[0].length;i++)
-        {
-            if(godziny[i][0] == h)
-            {
-                if(godziny[i][1] == m)
-                    flag = false;
-            }
-        }
+        int x = (h*60+m)/15;
+        godziny[x] = true;
+    }
 
-        if(flag == true)
+    void delGodzina(int h, int m)
+    {
+        int x = (h*60+m)/15;
+        godziny[x] = false;
+    }
+
+    void addGodzinaRange(int h_start, int m_start, int h_stop, int m_stop)
+    {
+        int x = (h_start*60+m_start)/15;
+        int y = (h_stop*60+m_stop)/15;
+
+        for(int i = x; i <= y ; i++)
         {
-            godziny[godziny[0].length][0] = h;
-            godziny[godziny[0].length][1] = m;
+            godziny[i] = true;
+        }
+    }
+
+    void delGodzinaRange(int h_start, int m_start, int h_stop, int m_stop)
+    {
+        int x = (h_start*60+m_start)/15;
+        int y = (h_stop*60+m_stop)/15;
+
+        for(int i = x; i <= y ; i++)
+        {
+            godziny[i] = true;
         }
     }
 
@@ -48,7 +64,7 @@ public class LocationData implements Serializable{
         this.id = id;
     }
 
-    private int id;
+
 
     public int getIlOchroniarzy() {
         return ilOchroniarzy;
@@ -58,12 +74,12 @@ public class LocationData implements Serializable{
         this.ilOchroniarzy = il_ochroniarzy;
     }
 
-    public int[][] getGodziny() {
+    public Boolean[] getGodziny() {
 
         return godziny;
     }
 
-    public void setGodziny(int[][] godziny) {
+    public void setGodziny(Boolean[] godziny) {
         this.godziny = godziny;
     }
 
