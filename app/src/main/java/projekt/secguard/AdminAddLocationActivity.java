@@ -23,12 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+//todo try i catche na typy inputów
+
 public class AdminAddLocationActivity extends AppCompatActivity {
 
     Button button_choice1, button_choice2;
     ProgressDialog pDialog;
     ArrayList<DataHolder> companyData;
-    ArrayList<String> types;
+    ArrayList<DataTypesHolder> types;
     private String TAG = AdminAddLocationActivity.class.getSimpleName();
     int context_id = 0;
     int selector;
@@ -37,15 +39,17 @@ public class AdminAddLocationActivity extends AppCompatActivity {
     int flagDate;
 
     EditText edName, edStreet, edStreetNumber, edCity, edDateStart, edDateStop;
-    Button buttonOplus, buttonOminus, buttonSetDate, buttonSetDate2, buttonSetStartHour, buttonSetStopHour;
+    Button buttonOplus, buttonOminus, buttonSetDate, buttonSetDate2, buttonSetStartHour, buttonSetStopHour, buttonAdd;
     TextView textHowManyGuards, textTimeStart, textTimeStop;
     String type;
-
+    LocationData location = new LocationData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_location);
+
+
 
         edName = (EditText) findViewById(R.id.editText5);
         edStreet = (EditText) findViewById(R.id.editText6);
@@ -89,6 +93,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                 if(guards<10)
                 guards++;
                 textHowManyGuards.setText("" + guards);
+                location.setIlOchroniarzy(guards);
             }
         });
 
@@ -100,6 +105,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                 if(guards>0)
                 guards--;
                 textHowManyGuards.setText("" + guards);
+                location.setIlOchroniarzy(guards);
             }
         });
 
@@ -158,6 +164,34 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             }
         });
 
+        buttonAdd = (Button) findViewById(R.id.button19);
+        new getType().execute();
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //if(false)
+                //{
+
+
+                //}else{
+
+                    location.setNazwa(edName.getText().toString());
+                    location.setNr_ulicy(Integer.parseInt(edStreetNumber.getText().toString()));
+                    location.setUlica(edStreet.getText().toString());
+                    location.setGps_x(0);
+                    location.setGps_x(0);
+                    location.setGps_x(100);
+
+                    new insertCompany().execute();
+                    Toast.makeText(getApplicationContext(),
+                        "Wprowadzono do bazy",
+                        Toast.LENGTH_LONG)
+                        .show();
+            //}
+            }
+        });
+
+
 
 
 
@@ -168,9 +202,11 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         if (context_id == 1) {
+            int iterator_id = 0;
             menu.setHeaderTitle("Wybierz typ");
-            for (int i = 0; i < types.size(); i++) {
-                menu.add(0, i, 0, types.get(i));
+            for (DataTypesHolder d : types) {
+                menu.add(0, iterator_id, 0, d.getHold_name());
+                iterator_id++;
             }
         }
 
@@ -213,12 +249,14 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                         String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(newData));
                         edDateStart.setText(dateString);
                         minDate = newData;
+                        location.setStartData(newData);
                     }
                     if(flagDate == 2) {
                         Long newData = data.getLongExtra("calendarData", 0L);
                         String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(newData));
                         edDateStop.setText(dateString);
                         maxDate = newData;
+                        location.setStopData(newData);
                     }
                 }
                 break;
@@ -231,12 +269,14 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                         String timeString = new SimpleDateFormat("hh:mm").format(new Date(newData));
                         textTimeStart.setText(timeString);
                         minTime = newData;
+                        location.setStartGodziny(newData);
                     }
                     if(flagDate == 4) {
                         Long newData = data.getLongExtra("selectedTime", 0L);
                         String timeString = new SimpleDateFormat("hh:mm").format(new Date(newData));
                         textTimeStop.setText(timeString);
                         maxTime = newData;
+                        location.setStopGodziny(newData);
                     }
                 }
                 break;
@@ -250,11 +290,33 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         TextView textType = (TextView) findViewById(R.id.textView43);
         TextView textCompany = (TextView) findViewById(R.id.textView45);
 
-        if(context_id == 1)
-            textType.setText("Typ obiektu: " + types.get(selector));
+        if(context_id == 1) {
+            textType.setText("Typ obiektu: " + types.get(selector).getHold_name());
+            for(DataTypesHolder d : types)
+            {
+                if(d.getHold_name().compareTo(types.get(selector).toString())==0)
+                {
+                    location.setIdTyp(Integer.parseInt(d.getHold_id()));
+                    break;
+                }
+            }
 
-        if(context_id == 2)
+
+
+        }
+
+        if(context_id == 2) {
             textCompany.setText("Zleceniodawca: " + companyData.get(selector).getHold_name());
+
+            for(DataHolder d : companyData)
+            {
+                if(d.getHold_name().compareTo(companyData.get(selector).toString())==0)
+                {
+                    location.setIdZlec(Integer.parseInt(d.getHold_id()));
+                    break;
+                }
+            }
+        }
 
         return true;
     }
@@ -285,7 +347,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             Log.e(TAG, "Odebrano typy: " + jsonStr);
 
             if (jsonStr != null) {
-                types = new ArrayList<String>();
+                types = new ArrayList<DataTypesHolder>();
                 try {
                     JSONArray mJsonArray = new JSONArray(jsonStr);
                     JSONObject mJsonObject = new JSONObject();
@@ -294,7 +356,15 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                     for (int i = 0; i < mJsonArray.length(); i++) {
                         mJsonObject = mJsonArray.getJSONObject(i);
                         type = mJsonObject.getString("nazwa");
-                        types.add(type);
+
+                        mJsonObject = mJsonArray.getJSONObject(i);
+                        String id, n;
+
+                        id = mJsonObject.getString("id_typ");
+                        n = mJsonObject.getString("nazwa");
+
+                        DataTypesHolder d = new DataTypesHolder(id, n);
+                        types.add(d);
                     }
 
 
@@ -468,7 +538,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         String hold_id;
         String hold_name;
 
-        DataTypesHolder(String i, String n, String p, String k) {
+        DataTypesHolder(String i, String n) {
             hold_id = i;
             hold_name = n;
         }
@@ -487,6 +557,17 @@ public class AdminAddLocationActivity extends AppCompatActivity {
 
         public void setHold_id(String hold_id) {
             this.hold_id = hold_id;
+        }
+    }
+
+    private class insertCompany extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler insert = new HttpHandler();
+            String urlInsert = "http://185.28.100.205/insertCompany.php?nazwa=" + location.getNazwa() + "&ulica_numer=" + location.getNr_ulicy() + "&ulica=" + location.getUlica() + "&miasto=" + location.getMiasto() + "&data_start=" + location.getStartData() + "&data_stop=" + location.getStopData() + "&liczba_ochroniarzy=" + location.getIlOchroniarzy() + "&czas_start=" + location.getStartGodziny() + "&czas_stop=" + location.getStopGodziny() +  "&gps_x=" + location.getGps_x() +  "&gps_y=" + location.getGps_y() + "&gps_r=" + location.getGps_r();
+            String geting = insert.makeServiceCall(urlInsert);
+            Log.e(TAG, "Odebrano: " + geting);
+            return null;
         }
     }
 }

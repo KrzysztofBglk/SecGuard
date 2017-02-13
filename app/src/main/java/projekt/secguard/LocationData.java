@@ -10,56 +10,68 @@ public class LocationData implements Serializable{
 
     private int id;
     private String nazwa;
-    private String nr_ulicy;
+    private int nr_ulicy;
     private String ulica;
     private String miasto;
     private int idTyp;
     private int idZlec;
-    private int[] startData = new int[3]; //[dd][mm][yy]
-    private int[] stopData = new int[3];  //jw.
-    private Boolean[] godziny = new Boolean[104]; //104 kafelki doby po 15 minut od 00:00
+    private long startData;
+    private long stopData;
+    private long startGodziny;
+    private long stopGodziny;
     private int ilOchroniarzy;
     private int gps_x;
     private int gps_y;
+    private int gps_r;
 
-    String godzinyToString()
+    LocationData()
     {
-        String sGodziny = "";
 
-        for(int i = 0 ; i < godziny.length ; i++)
-        {
-            if(godziny[i] = true)
-                sGodziny += "1";
-            else
-                sGodziny += "0";
-        }
-
-        return sGodziny;
     }
 
-    Boolean[] stringGodzinyToIntTable(String sGodziny)
-    {
-        Boolean iGodziny[] = new Boolean[104];
-
-        for(int i = 0 ; i < sGodziny.length() ; i++)
-        {
-            if(sGodziny.toCharArray()[i] == '1')
-                iGodziny[i] = true;
-            else
-                iGodziny[i] = false;
-        }
-
-        return iGodziny;
+    public int getIdZlec() {
+        return idZlec;
     }
 
-    void setGodziny(String sGodziny)
-    {
-        godziny = stringGodzinyToIntTable(sGodziny);
+    public long getStartData() {
+        return startData;
     }
 
+    public void setStartData(long startData) {
+        this.startData = startData;
+    }
 
+    public long getStopData() {
+        return stopData;
+    }
 
+    public void setStopData(long stopData) {
+        this.stopData = stopData;
+    }
 
+    public long getStartGodziny() {
+        return startGodziny;
+    }
+
+    public void setStartGodziny(long startGodziny) {
+        this.startGodziny = startGodziny;
+    }
+
+    public long getStopGodziny() {
+        return stopGodziny;
+    }
+
+    public void setStopGodziny(long stopGodziny) {
+        this.stopGodziny = stopGodziny;
+    }
+
+    public int getGps_r() {
+        return gps_r;
+    }
+
+    public void setGps_r(int gps_r) {
+        this.gps_r = gps_r;
+    }
 
     public int getGps_y() {
         return gps_y;
@@ -69,12 +81,12 @@ public class LocationData implements Serializable{
         this.gps_y = gps_y;
     }
 
-    public String getNr_ulicy() {
+    public int getNr_ulicy() {
 
         return nr_ulicy;
     }
 
-    public void setNr_ulicy(String nr_ulicy) {
+    public void setNr_ulicy(int nr_ulicy) {
         this.nr_ulicy = nr_ulicy;
     }
 
@@ -89,39 +101,9 @@ public class LocationData implements Serializable{
 
 
 
-    void addGodzina(int h, int m)
-    {
-        int x = (h*60+m)/15;
-        godziny[x] = true;
-    }
 
-    void delGodzina(int h, int m)
-    {
-        int x = (h*60+m)/15;
-        godziny[x] = false;
-    }
 
-    void addGodzinaRange(int h_start, int m_start, int h_stop, int m_stop)
-    {
-        int x = (h_start*60+m_start)/15;
-        int y = (h_stop*60+m_stop)/15;
 
-        for(int i = x; i <= y ; i++)
-        {
-            godziny[i] = true;
-        }
-    }
-
-    void delGodzinaRange(int h_start, int m_start, int h_stop, int m_stop)
-    {
-        int x = (h_start*60+m_start)/15;
-        int y = (h_stop*60+m_stop)/15;
-
-        for(int i = x; i <= y ; i++)
-        {
-            godziny[i] = false;
-        }
-    }
 
 
     //GETTERS&SETTERS
@@ -143,39 +125,10 @@ public class LocationData implements Serializable{
         this.ilOchroniarzy = il_ochroniarzy;
     }
 
-    public Boolean[] getGodziny() {
-
-        return godziny;
-    }
-
-    public void setGodziny(Boolean[] godziny) {
-        this.godziny = godziny;
-    }
-
-    public int[] getStopData() {
-
-        return stopData;
-    }
-
-    public void setStopData(int[] stop_data) {
-        this.stopData = stop_data;
-    }
-
-    public int[] getStartData() {
-
-        return startData;
-    }
 
 
-   // ZMIANA public int na void bo nie dalo sie kompilowac
-   void setStartData(int[] start_data) {
-        this.startData = start_data;
-    }
 
-    public int getIdZlec() {
 
-        return idZlec;
-    }
 
     public void setIdZlec(int id_zlec) {
         this.idZlec = id_zlec;
@@ -208,12 +161,12 @@ public class LocationData implements Serializable{
         this.ulica = ulica;
     }
 
-    public String getNrUlicy() {
+    public int getNrUlicy() {
 
         return nr_ulicy;
     }
 
-    public void setNrUlicy(String nr_ulicy) {
+    public void setNrUlicy(int nr_ulicy) {
         this.nr_ulicy = nr_ulicy;
     }
 
