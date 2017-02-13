@@ -10,6 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#808080"
     tools:context="projekt.secguard.UserScreenActivity">
 
 
@@ -17,83 +18,105 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
         <ImageView
-            android:layout_width="145dp"
-            android:layout_marginLeft="120dp"
-            android:layout_height="154dp"
+            android:layout_width="300dp"
+            android:layout_marginLeft="30dp"
             app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/imageView" />
+            android:id="@+id/imageView"
+            android:layout_height="400dp" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="65dp">
+            android:layout_height="40dp">
 
             <TextView
-                android:text="Zalogowano jako: "
+                android:text="Zalogowano:"
                 android:textSize="24sp"
                 android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
                 android:id="@+id/textView2" />
 
             <TextView
                 android:text="DEV_USERLOGIN"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/textLogin"
                 android:textSize="24sp"
-                android:layout_weight="1" />
+                android:textStyle="normal|bold" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.12"
-            android:weightSum="1">
+            android:layout_height="40dp">
 
             <TextView
-                android:text="Dane:"
-                android:layout_marginLeft="15dp"
-                android:layout_width="76dp"
-                android:textSize="24sp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3" />
-
-            <TextView
-                android:text="DEV_USERREALNAME"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textNames"
-                android:textSize="24sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_weight="0.02">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textSize="24sp"
                 android:id="@+id/textView"
-                android:text="  Stanowisko:  " />
+                android:text="  Stanowisko:  "
+                android:layout_width="185dp" />
 
             <TextView
                 android:text="DEV_RANK"
-                android:layout_width="351dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textRank"
+                android:layout_height="match_parent"
+                android:id="@+id/txt_dane_stanowisko"
                 android:textSize="24sp"
-                android:layout_weight="1" />
+
+                android:textStyle="normal|bold"
+                android:layout_width="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:weightSum="1">
+
+            <TextView
+                android:text="Imie:"
+                android:layout_marginLeft="15dp"
+                android:layout_width="170dp"
+                android:textSize="24sp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView3" />
+
+            <TextView
+                android:text="imie"
+                android:layout_height="match_parent"
+                android:id="@+id/txt_dane_imie"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:layout_width="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+           >
+
+            <TextView
+                android:text="  Nazwisko:"
+                android:layout_height="match_parent"
+                android:id="@+id/textView27"
+                android:textSize="24sp"
+                android:layout_width="185dp" />
+
+            <TextView
+                android:text="nazwisko"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="24sp"
+                android:id="@+id/txt_dane_nazwisko"
+                android:textStyle="normal|bold"
+                android:textAllCaps="false" />
         </LinearLayout>
 
     </LinearLayout>

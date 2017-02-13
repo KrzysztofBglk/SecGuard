@@ -1,6 +1,7 @@
 package projekt.secguard;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +22,11 @@ public class UserScreenActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
 
     private TextView userLogin;
-    private TextView userName;
-    private TextView userRank;
+    private TextView userStanowisko;
+    private TextView userImie;
+    private TextView userNazwisko;
     private UserData userData;
-
+    private ImageView avatar;
 
 
     @Override
@@ -31,16 +34,36 @@ public class UserScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_screen);
         userLogin = (TextView) findViewById(R.id.textLogin);
-        userName = (TextView) findViewById(R.id.textNames);
-        userRank = (TextView) findViewById(R.id.textRank);
-
+        userStanowisko= (TextView) findViewById(R.id.txt_dane_stanowisko);
+        userImie = (TextView) findViewById(R.id.txt_dane_imie);
+        userNazwisko = (TextView) findViewById(R.id.txt_dane_nazwisko);
+        avatar = (ImageView)  findViewById(R.id.imageView);
 
         // Uzyskiwanie danych o logowaniu z klasy UserData
         Intent intent = getIntent();
         userData = (UserData) intent.getExtras().getSerializable("userData");
+
         userLogin.setText(userData.getLogin());
-        userName.setText(userData.getImie()+" "+userData.getNazwisko());
-        userRank.setText(userData.getPozycja());
+
+        userStanowisko.setText(userData.getPozycja());
+        if(userData.getPozycja().equals("menager")){
+            userStanowisko.setTextColor(getResources().getColor(R.color.red));
+        }
+        if(userData.getPozycja().equals("ochroniarz")){
+            userStanowisko.setTextColor(getResources().getColor(R.color.green));
+        }
+
+        userImie.setText(userData.getImie());
+        userNazwisko.setText(userData.getNazwisko());
+
+
+        if(userData.getLogin().equals("bozena")){
+            avatar.setImageResource(R.drawable.avatar_bozena);
+        }
+        if(userData.getLogin().equals("mar")){
+            avatar.setImageResource(R.drawable.avatar_grzegorz);
+        }
+
 
         // Boczne menu
         setMenuOptions();
