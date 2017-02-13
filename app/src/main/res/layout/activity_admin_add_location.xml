@@ -34,7 +34,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/editText5"
                 android:layout_weight="0.18" />
@@ -57,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/editText6"
                 android:layout_weight="0.89" />
@@ -79,7 +77,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/editText7"
                 android:layout_weight="1" />
@@ -102,7 +99,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/editText8"
                 android:layout_weight="1" />
@@ -168,13 +164,19 @@
                 android:id="@+id/editText9"
                 android:layout_weight="1" />
 
+            <Button
+                android:text="Ustaw datę"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button16"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_weight="0.08">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:text="Data zakończenia"
@@ -189,6 +191,13 @@
                 android:inputType="date"
                 android:ems="10"
                 android:id="@+id/editText13"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="Ustaw datę"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button18"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -255,21 +264,37 @@
                 android:id="@+id/textView51"
                 android:layout_weight="1" />
 
-            <Button
-                android:text="Ustaw"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button13"
+                android:id="@+id/textView31"
                 android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView32"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="OD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button14" />
+
+            <Button
+                android:text="DO"
+                android:layout_width="94dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button13" />
 
         </LinearLayout>
 
         <Button
-            android:text="Dodaj"
+            android:text="Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button14"
-            android:layout_weight="0.19" />
+            android:id="@+id/button19" />
 
     </LinearLayout>
 </RelativeLayout>

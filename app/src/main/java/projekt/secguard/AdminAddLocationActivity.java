@@ -1,32 +1,44 @@
 package projekt.secguard;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AdminAddLocationActivity extends AppCompatActivity {
 
     Button button_choice1, button_choice2;
     ProgressDialog pDialog;
-    ArrayList <DataHolder> companyData;
-    ArrayList <String> types;
+    ArrayList<DataHolder> companyData;
+    ArrayList<String> types;
     private String TAG = AdminAddLocationActivity.class.getSimpleName();
     int context_id = 0;
+    int selector;
+    int guards = 0;
+    long minDate, maxDate, minTime, maxTime;
+    int flagDate;
 
-    EditText edName, edStreet, edStreetNumber, edCity;
+    EditText edName, edStreet, edStreetNumber, edCity, edDateStart, edDateStop;
+    Button buttonOplus, buttonOminus, buttonSetDate, buttonSetDate2, buttonSetStartHour, buttonSetStopHour;
+    TextView textHowManyGuards, textTimeStart, textTimeStop;
     String type;
 
 
@@ -39,13 +51,14 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         edStreet = (EditText) findViewById(R.id.editText6);
         edStreetNumber = (EditText) findViewById(R.id.editText7);
         edCity = (EditText) findViewById(R.id.editText8);
+        textHowManyGuards = (TextView) findViewById(R.id.textView49);
+        edDateStart = (EditText) findViewById(R.id.editText9);
+        edDateStop = (EditText) findViewById(R.id.editText13);
+        textTimeStart = (TextView) findViewById(R.id.textView31);
+        textTimeStop = (TextView) findViewById(R.id.textView32);
 
-
-
-
-        button_choice1 = (Button)findViewById(R.id.button5);
-        //new getType().execute();
-
+        button_choice1 = (Button) findViewById(R.id.button5);
+        new getType().execute();
         button_choice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +69,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             }
         });
 
-        button_choice2 = (Button)findViewById(R.id.button6);
+        button_choice2 = (Button) findViewById(R.id.button6);
         new getCompany().execute();
         button_choice2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,25 +81,100 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             }
         });
 
+        buttonOplus = (Button) findViewById(R.id.button10);
+        new getType().execute();
+        buttonOplus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(guards<10)
+                guards++;
+                textHowManyGuards.setText("" + guards);
+            }
+        });
 
-        
-        
+        buttonOminus = (Button) findViewById(R.id.button11);
+        new getType().execute();
+        buttonOminus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(guards>0)
+                guards--;
+                textHowManyGuards.setText("" + guards);
+            }
+        });
+
+        buttonOminus = (Button) findViewById(R.id.button11);
+        new getType().execute();
+        buttonOminus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(guards>0)
+                    guards--;
+                textHowManyGuards.setText("" + guards);
+            }
+        });
+
+        buttonSetDate = (Button) findViewById(R.id.button16);
+        new getType().execute();
+        buttonSetDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagDate = 1;
+                Intent intent = new Intent(getApplicationContext(), CalendarViewActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        buttonSetDate2 = (Button) findViewById(R.id.button18);
+        new getType().execute();
+        buttonSetDate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagDate = 2;
+                Intent intent = new Intent(getApplicationContext(), CalendarViewActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        buttonSetStartHour = (Button) findViewById(R.id.button14);
+        new getType().execute();
+        buttonSetStartHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagDate = 3;
+                Intent intent = new Intent(getApplicationContext(), TimeActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
+
+        buttonSetStopHour = (Button) findViewById(R.id.button13);
+        new getType().execute();
+        buttonSetStopHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagDate = 4;
+                Intent intent = new Intent(getApplicationContext(), TimeActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
+
+
+
+
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        if(context_id == 1) {
+        if (context_id == 1) {
             menu.setHeaderTitle("Wybierz typ");
-            int iterator_id = 0;
-            for (int i = 0;i>types.size();i++) {
-                menu.add(types.get(i));
-                iterator_id++;
+            for (int i = 0; i < types.size(); i++) {
+                menu.add(0, i, 0, types.get(i));
             }
         }
 
-        if(context_id == 2) {
+        if (context_id == 2) {
             menu.setHeaderTitle("Wybierz firme");
             int iterator_id = 0;
             for (DataHolder d : companyData) {
@@ -94,6 +182,81 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                 iterator_id++;
             }
         }
+    }
+
+    /*@Override
+    protected void onResume()
+    {
+        super.onResume();
+        Intent intent = getIntent();
+        if(flagDate == 1) {
+            minDate = intent.getLongExtra("calendarDate", 0L);
+            Log.e(TAG, "Data w intent long: " + minDate);
+            String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(minDate));
+            edDateStart.setText(dateString);
+
+        }
+
+        if(flagDate == 2) {
+            maxDate = getIntent().getLongExtra("calendarDate", 0L);
+        }
+    }*/
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (1) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    if(flagDate == 1) {
+                        Long newData = data.getLongExtra("calendarData", 0L);
+                        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(newData));
+                        edDateStart.setText(dateString);
+                        minDate = newData;
+                    }
+                    if(flagDate == 2) {
+                        Long newData = data.getLongExtra("calendarData", 0L);
+                        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(newData));
+                        edDateStop.setText(dateString);
+                        maxDate = newData;
+                    }
+                }
+                break;
+            }
+
+            case (2) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    if(flagDate == 3) {
+                        Long newData = data.getLongExtra("selectedTime", 0L);
+                        String timeString = new SimpleDateFormat("hh:mm").format(new Date(newData));
+                        textTimeStart.setText(timeString);
+                        minTime = newData;
+                    }
+                    if(flagDate == 4) {
+                        Long newData = data.getLongExtra("selectedTime", 0L);
+                        String timeString = new SimpleDateFormat("hh:mm").format(new Date(newData));
+                        textTimeStop.setText(timeString);
+                        maxTime = newData;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        selector = item.getItemId();
+        TextView textType = (TextView) findViewById(R.id.textView43);
+        TextView textCompany = (TextView) findViewById(R.id.textView45);
+
+        if(context_id == 1)
+            textType.setText("Typ obiektu: " + types.get(selector));
+
+        if(context_id == 2)
+            textCompany.setText("Zleceniodawca: " + companyData.get(selector).getHold_name());
+
+        return true;
     }
 
     private class getType extends AsyncTask<Void, Void, Void> {
@@ -105,7 +268,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             pDialog = new ProgressDialog(AdminAddLocationActivity.this);
             pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
-            pDialog.show();
+            //pDialog.show();
         }
 
         @Override
@@ -114,28 +277,24 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             HttpHandler getAll = new HttpHandler();
 
             // hash code zabezpiecza przed wyciekiem danych z serwera
-            String urlCompanyData = "http://185.28.100.205/getAllTypes.php?hashcode=J1f2sa0sdi3Awj349";
+            String urlTypesData = "http://185.28.100.205/getAllTypes.php?hashcode=J1f2sa0sdi3Awj349";
 
             // Request na serwer
-            String jsonStr = getAll.makeServiceCall(urlCompanyData);
+            String jsonStr = getAll.makeServiceCall(urlTypesData);
 
-            Log.e(TAG, "Odebrano: " + jsonStr);
+            Log.e(TAG, "Odebrano typy: " + jsonStr);
 
             if (jsonStr != null) {
-                companyData = new ArrayList<DataHolder>();
+                types = new ArrayList<String>();
                 try {
                     JSONArray mJsonArray = new JSONArray(jsonStr);
                     JSONObject mJsonObject = new JSONObject();
 
 
-                    for(int i = 0 ; i < mJsonArray.length() ; i++) {
+                    for (int i = 0; i < mJsonArray.length(); i++) {
                         mJsonObject = mJsonArray.getJSONObject(i);
-
-
                         type = mJsonObject.getString("nazwa");
-
                         types.add(type);
-
                     }
 
 
@@ -184,7 +343,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             pDialog = new ProgressDialog(AdminAddLocationActivity.this);
             pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
-            pDialog.show();
+            //pDialog.show();
         }
 
         @Override
@@ -198,7 +357,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             // Request na serwer
             String jsonStr = getAll.makeServiceCall(urlCompanyData);
 
-            Log.e(TAG, "Odebrano: " + jsonStr);
+            Log.e(TAG, "Odebrano firmy: " + jsonStr);
 
             if (jsonStr != null) {
                 companyData = new ArrayList<DataHolder>();
@@ -207,17 +366,19 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                     JSONObject mJsonObject = new JSONObject();
 
 
-                    for(int i = 0 ; i < mJsonArray.length() ; i++) {
+                    for (int i = 0; i < mJsonArray.length(); i++) {
                         mJsonObject = mJsonArray.getJSONObject(i);
-                        String id,n,p,k;
+                        String id, n, p, k;
 
                         id = mJsonObject.getString("id_zleceniodawcy");
                         n = mJsonObject.getString("nazwa_firmy");
                         p = mJsonObject.getString("telefon");
                         k = mJsonObject.getString("osoba_kontakt");
-                        DataHolder d = new DataHolder(id,n,p,k);
-                        companyData.add(d) ;
+                        DataHolder d = new DataHolder(id, n, p, k);
+                        companyData.add(d);
                     }
+
+
 
 
                 } catch (final JSONException e) {
@@ -257,25 +418,23 @@ public class AdminAddLocationActivity extends AppCompatActivity {
     }
 
 
-
-    }
-
-    class DataHolder
-    {
+    private class DataHolder {
         String hold_id;
         String hold_name;
         String hold_phone;
         String hold_kontakt;
 
-        DataHolder(String i, String n,String p, String k){
+        DataHolder(String i, String n, String p, String k) {
             hold_id = i;
             hold_name = n;
             hold_phone = p;
             hold_kontakt = k;
         }
-        public String getHold_id(){
+
+        public String getHold_id() {
             return hold_id;
         }
+
         public String getHold_kontakt() {
             return hold_kontakt;
         }
@@ -299,8 +458,35 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         public void setHold_phone(String hold_phone) {
             this.hold_phone = hold_phone;
         }
-        public void setHold_id(String hold_id){
+
+        public void setHold_id(String hold_id) {
             this.hold_id = hold_id;
         }
     }
 
+    private class DataTypesHolder {
+        String hold_id;
+        String hold_name;
+
+        DataTypesHolder(String i, String n, String p, String k) {
+            hold_id = i;
+            hold_name = n;
+        }
+
+        public String getHold_id() {
+            return hold_id;
+        }
+
+        public String getHold_name() {
+            return hold_name;
+        }
+
+        public void setHold_name(String hold_name) {
+            this.hold_name = hold_name;
+        }
+
+        public void setHold_id(String hold_id) {
+            this.hold_id = hold_id;
+        }
+    }
+}

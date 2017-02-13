@@ -19,6 +19,47 @@ public class LocationData implements Serializable{
     private int[] stopData = new int[3];  //jw.
     private Boolean[] godziny = new Boolean[104]; //104 kafelki doby po 15 minut od 00:00
     private int ilOchroniarzy;
+    private int gps_x;
+    private int gps_y;
+
+    String godzinyToString()
+    {
+        String sGodziny = "";
+
+        for(int i = 0 ; i < godziny.length ; i++)
+        {
+            if(godziny[i] = true)
+                sGodziny += "1";
+            else
+                sGodziny += "0";
+        }
+
+        return sGodziny;
+    }
+
+    Boolean[] stringGodzinyToIntTable(String sGodziny)
+    {
+        Boolean iGodziny[] = new Boolean[104];
+
+        for(int i = 0 ; i < sGodziny.length() ; i++)
+        {
+            if(sGodziny.toCharArray()[i] == '1')
+                iGodziny[i] = true;
+            else
+                iGodziny[i] = false;
+        }
+
+        return iGodziny;
+    }
+
+    void setGodziny(String sGodziny)
+    {
+        godziny = stringGodzinyToIntTable(sGodziny);
+    }
+
+
+
+
 
     public int getGps_y() {
         return gps_y;
@@ -46,8 +87,7 @@ public class LocationData implements Serializable{
         this.gps_x = gps_x;
     }
 
-    private int gps_x;
-    private int gps_y;
+
 
     void addGodzina(int h, int m)
     {
