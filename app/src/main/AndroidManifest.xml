@@ -36,7 +36,8 @@
         <activity android:name=".UsersListActivity" />
         <activity android:name=".ProfileListViewActivity" />
         <activity android:name=".AdminAddCompanyActivity" />
-        <activity android:name=".AdminMenageCompanyActivity"></activity>
+        <activity android:name=".AdminMenageCompanyActivity" />
+        <activity android:name=".AdminAddLocationActivity"></activity>
     </application>
 
 </manifest>

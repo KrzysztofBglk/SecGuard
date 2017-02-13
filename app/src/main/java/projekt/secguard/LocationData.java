@@ -20,6 +20,35 @@ public class LocationData implements Serializable{
     private Boolean[] godziny = new Boolean[104]; //104 kafelki doby po 15 minut od 00:00
     private int ilOchroniarzy;
 
+    public int getGps_y() {
+        return gps_y;
+    }
+
+    public void setGps_y(int gps_y) {
+        this.gps_y = gps_y;
+    }
+
+    public String getNr_ulicy() {
+
+        return nr_ulicy;
+    }
+
+    public void setNr_ulicy(String nr_ulicy) {
+        this.nr_ulicy = nr_ulicy;
+    }
+
+    public int getGps_x() {
+
+        return gps_x;
+    }
+
+    public void setGps_x(int gps_x) {
+        this.gps_x = gps_x;
+    }
+
+    private int gps_x;
+    private int gps_y;
+
     void addGodzina(int h, int m)
     {
         int x = (h*60+m)/15;
@@ -50,7 +79,7 @@ public class LocationData implements Serializable{
 
         for(int i = x; i <= y ; i++)
         {
-            godziny[i] = true;
+            godziny[i] = false;
         }
     }
 
