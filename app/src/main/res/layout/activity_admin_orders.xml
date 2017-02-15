@@ -9,5 +9,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="projekt.secguard.AdminOrdersActivity">
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+
+
+
+
+
+
 
 </RelativeLayout>

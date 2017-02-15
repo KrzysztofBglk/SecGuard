@@ -59,7 +59,7 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
                 SystemClock.sleep(1000);
                 if(tempName.length() == 0)
                 {
-                    txt_status.setText("Brak nazwy");
+                    txt_status.setText("Wpisz nawze");
                     txt_status.setTextColor(getResources().getColor(R.color.red));
                 }else {
                     if (companyNames.contains(tempName)) {
