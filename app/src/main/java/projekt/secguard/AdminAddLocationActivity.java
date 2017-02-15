@@ -355,13 +355,13 @@ public class AdminAddLocationActivity extends AppCompatActivity {
 
                     for (int i = 0; i < mJsonArray.length(); i++) {
                         mJsonObject = mJsonArray.getJSONObject(i);
-                        type = mJsonObject.getString("nazwa");
+                        type = mJsonObject.getString("typy_nazwa");
 
                         mJsonObject = mJsonArray.getJSONObject(i);
                         String id, n;
 
                         id = mJsonObject.getString("id_typ");
-                        n = mJsonObject.getString("nazwa");
+                        n = mJsonObject.getString("typy_nazwa");
 
                         DataTypesHolder d = new DataTypesHolder(id, n);
                         types.add(d);
