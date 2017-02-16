@@ -27,7 +27,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
     private String TAG = AdminOrdersActivity.class.getSimpleName();
 
     private ProgressDialog pDialog;
-    private ListView lv;
+    private ListView  lista;
 
     // URL to get contacts JSON
     private static String url = "http://185.28.100.205/getAllLocationData.php?hashcode=J1f2sa0sdi3Awj349";
@@ -37,9 +37,9 @@ public class AdminOrdersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admin_orders);
         contactList = new ArrayList<>();
-        lv = (ListView)findViewById(R.id.lista);
+        lista = (ListView)findViewById(R.id.lista_lokacji);
 
         new GetObjects().execute();
     }
@@ -185,7 +185,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "ON POST:", Toast.LENGTH_LONG).show();
 
-            lv.setAdapter(adapter);
+            lista.setAdapter(adapter);
         }
 
     }
