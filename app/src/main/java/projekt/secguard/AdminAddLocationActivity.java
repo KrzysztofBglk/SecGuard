@@ -176,17 +176,21 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                 //}else{
 
                     location.setNazwa(edName.getText().toString());
-                    location.setNr_ulicy(Integer.parseInt(edStreetNumber.getText().toString()));
+                    location.setNr_ulicy(edStreetNumber.getText().toString());
                     location.setUlica(edStreet.getText().toString());
+                    location.setMiasto(edCity.getText().toString());
                     location.setGps_x(0);
-                    location.setGps_x(0);
-                    location.setGps_x(100);
+                    location.setGps_y(0);
+                    location.setGps_r(100);
 
                     new insertCompany().execute();
                     Toast.makeText(getApplicationContext(),
                         "Wprowadzono do bazy",
                         Toast.LENGTH_LONG)
                         .show();
+
+
+
             //}
             }
         });
@@ -292,30 +296,14 @@ public class AdminAddLocationActivity extends AppCompatActivity {
 
         if(context_id == 1) {
             textType.setText("Typ obiektu: " + types.get(selector).getHold_name());
-            for(DataTypesHolder d : types)
-            {
-                if(d.getHold_name().compareTo(types.get(selector).toString())==0)
-                {
-                    location.setIdTyp(Integer.parseInt(d.getHold_id()));
-                    break;
-                }
-            }
-
+            location.setIdTyp(Integer.parseInt(types.get(selector).getHold_id()));
 
 
         }
 
         if(context_id == 2) {
             textCompany.setText("Zleceniodawca: " + companyData.get(selector).getHold_name());
-
-            for(DataHolder d : companyData)
-            {
-                if(d.getHold_name().compareTo(companyData.get(selector).toString())==0)
-                {
-                    location.setIdZlec(Integer.parseInt(d.getHold_id()));
-                    break;
-                }
-            }
+            location.setIdZlec(Integer.parseInt(companyData.get(selector).getHold_id()));
         }
 
         return true;
@@ -564,7 +552,29 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler insert = new HttpHandler();
-            String urlInsert = "http://185.28.100.205/insertCompany.php?nazwa=" + location.getNazwa() + "&ulica_numer=" + location.getNr_ulicy() + "&ulica=" + location.getUlica() + "&miasto=" + location.getMiasto() + "&data_start=" + location.getStartData() + "&data_stop=" + location.getStopData() + "&liczba_ochroniarzy=" + location.getIlOchroniarzy() + "&czas_start=" + location.getStartGodziny() + "&czas_stop=" + location.getStopGodziny() +  "&gps_x=" + location.getGps_x() +  "&gps_y=" + location.getGps_y() + "&gps_r=" + location.getGps_r();
+
+
+            String startDateString = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(location.getStartData()));
+            String stopDateString = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(location.getStopData()));
+            String startHourString = new SimpleDateFormat("hh:mm:ss").format(new Date(location.getStartGodziny()));
+            String stopHourString = new SimpleDateFormat("hh:mm:ss").format(new Date(location.getStopGodziny()));
+
+
+            String urlInsert = "http://185.28.100.205/insertLocation.php?nazwa=" + location.getNazwa()
+                    + "&ulica_numer=" + location.getNr_ulicy()
+                    + "&ulica=" + location.getUlica()
+                    + "&id_typ=" + location.getIdTyp()
+                    + "&id_zlec=" + location.getIdZlec()
+                    + "&miasto=" + location.getMiasto()
+                    + "&data_start=" + startDateString
+                    + "&data_stop=" + stopDateString
+                    + "&liczba_ochroniarzy=" + location.getIlOchroniarzy()
+                    + "&czas_start=" + startHourString
+                    + "&czas_stop=" + stopHourString
+                    + "&gps_x=" + location.getGps_x()
+                    +  "&gps_y=" + location.getGps_y()
+                    + "&gps_r=" + location.getGps_r();
+
             String geting = insert.makeServiceCall(urlInsert);
             Log.e(TAG, "Odebrano: " + geting);
             return null;

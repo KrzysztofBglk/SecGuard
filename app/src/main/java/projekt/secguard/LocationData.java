@@ -10,7 +10,7 @@ public class LocationData implements Serializable{
 
     private int id;
     private String nazwa;
-    private int nr_ulicy;
+    private String nr_ulicy;
     private String ulica;
     private String miasto;
     private int idTyp;
@@ -81,12 +81,12 @@ public class LocationData implements Serializable{
         this.gps_y = gps_y;
     }
 
-    public int getNr_ulicy() {
+    public String getNr_ulicy() {
 
         return nr_ulicy;
     }
 
-    public void setNr_ulicy(int nr_ulicy) {
+    public void setNr_ulicy(String nr_ulicy) {
         this.nr_ulicy = nr_ulicy;
     }
 
@@ -161,12 +161,12 @@ public class LocationData implements Serializable{
         this.ulica = ulica;
     }
 
-    public int getNrUlicy() {
+    public String getNrUlicy() {
 
         return nr_ulicy;
     }
 
-    public void setNrUlicy(int nr_ulicy) {
+    public void setNrUlicy(String nr_ulicy) {
         this.nr_ulicy = nr_ulicy;
     }
 
