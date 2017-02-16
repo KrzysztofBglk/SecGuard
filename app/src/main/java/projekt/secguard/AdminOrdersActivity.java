@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 
 public class AdminOrdersActivity extends AppCompatActivity {
 
+    //TODO ORDER BY LIST VIEW
     private String TAG = AdminOrdersActivity.class.getSimpleName();
 
     private ProgressDialog pDialog;
@@ -40,6 +42,17 @@ public class AdminOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_orders);
         contactList = new ArrayList<>();
         lista = (ListView)findViewById(R.id.lista_lokacji);
+
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "ON CLICK: POS" + position + " id " + id, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
 
         new GetObjects().execute();
     }
@@ -165,26 +178,25 @@ public class AdminOrdersActivity extends AppCompatActivity {
 
             ListAdapter adapter = new SimpleAdapter(
                     AdminOrdersActivity.this, contactList,
-                    R.layout.menu_one_object, new String[]{"id_lokacje", "nazwa",
-                    "ulica_numer","ulica","miasto","typy_nazwa","nazwa_firmy","osoba_kontakt","telefon",
-                    "data_start","data_stop","liczba_ochroniarzy","czas_start","czas_stop"}, new int[]{R.id.tv_id_lokacji,
+                    R.layout.menu_one_object, new String[]{"id_lokacji", "nazwa",
+                    "ulica_numer","ulica","miasto","typy_nazwa","nazwa_firmy",
+                    "data_start","data_stop","liczba_ochroniarzy","czas_start","czas_stop"}, new int[]{
+                    //"osoba_kontakt","telefon",
+                    R.id.tv_id_lokacji,
                     R.id.tv_nazwa,
                     R.id.tv_ulica_numer,
                     R.id.tv_ulica,
                     R.id.tv_miasto,
                     R.id.tv_typy_nazwa,
                     R.id.tv_nazwa_firmy,
-                    R.id.tv_osoba_kontakt,
-                    R.id.tv_telefon,
+                   // R.id.tv_osoba_kontakt,
+                  //  R.id.tv_telefon,
                     R.id.tv_data_start,
                     R.id.tv_data_stop,
                     R.id.tv_liczba_ochroniarzy,
                     R.id.tv_czas_start,
                     R.id.tv_czas_stop
             });
-
-            Toast.makeText(getApplicationContext(), "ON POST:", Toast.LENGTH_LONG).show();
-
             lista.setAdapter(adapter);
         }
 

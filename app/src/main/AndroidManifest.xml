@@ -39,7 +39,8 @@
         <activity android:name=".AdminMenageCompanyActivity" />
         <activity android:name=".AdminAddLocationActivity" />
         <activity android:name=".CalendarViewActivity" />
-        <activity android:name=".TimeActivity"></activity>
+        <activity android:name=".TimeActivity" />
+        <activity android:name=".AdminOrdersForLocationActivity"></activity>
     </application>
 
 </manifest>

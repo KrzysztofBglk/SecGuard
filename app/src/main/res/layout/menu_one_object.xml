@@ -11,59 +11,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <TextView
 
+            android:layout_height="match_parent"
+            android:id="@+id/tv_id_lokacji"
+            android:textSize="20sp"
+            android:text="12"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text='. "'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_id_lokacji"
-            android:layout_weight="1" />
+            android:id="@+id/textView36"
+            android:layout_weight="0.07"
+            android:textSize="20sp" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_nazwa"
-            android:layout_weight="1" />
+            android:textSize="20sp"
+            android:layout_weight="0"
+            android:textColor="@android:color/holo_orange_light" />
 
         <TextView
-
+            android:text='" dla: '
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_ulica"
-            android:layout_weight="1" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_ulica_numer"
-            android:layout_weight="1" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_miasto"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-
-            android:layout_width="127dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_typy_nazwa" />
+            android:id="@+id/textView44"
+            android:textSize="20sp" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_nazwa_firmy"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_orange_light" />
 
     </LinearLayout>
 
@@ -73,18 +61,53 @@
         android:layout_height="match_parent">
 
         <TextView
-
+            android:text="Adres: ul. "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_osoba_kontakt"
-            android:layout_weight="1" />
+            android:id="@+id/textView38"
+            android:textSize="20sp"
+            android:layout_weight="0" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_telefon"
-            android:layout_weight="1" />
+            android:id="@+id/tv_ulica"
+            android:layout_weight="0"
+            android:textSize="20sp" />
+
+        <TextView
+            android:text=" "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView39"
+            android:layout_weight="0"
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_ulica_numer"
+            android:layout_weight="0"
+            android:textSize="20sp" />
+
+        <TextView
+            android:text="   "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView48"
+            android:layout_weight="0"
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_miasto"
+            android:layout_weight="1"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -93,45 +116,116 @@
         android:layout_height="match_parent">
 
         <TextView
-
+            android:text="Typ obiektu: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_data_start"
-            android:layout_weight="1" />
+            android:id="@+id/tv_static_typobiektu"
+            android:textSize="20sp" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_data_stop"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:id="@+id/tv_typy_nazwa"
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:textSize="20sp"
+            android:textStyle="normal|bold"
+            android:textColor="@color/black_overlay" />
+
+        <TextView
+            android:text=",  Ochroniarzy: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_static_liczba_ochroniarzy"
+            android:textSize="20sp" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_liczba_ochroniarzy"
-            android:layout_weight="1" />
+            android:textSize="20sp"
+            android:textStyle="normal|bold"
+            android:textColor="@color/black_overlay" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Ochrona od: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_static_od_godziny"
+            android:layout_weight="1"
+            android:textSize="20sp" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_czas_start"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_blue_dark" />
+
+        <TextView
+            android:text=" do "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_static_do_godziny"
+            android:layout_weight="1"
+            android:textSize="20sp" />
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_czas_stop"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Zlecenie  od: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_static_od"
+            android:textSize="17sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_data_start"
+            android:textSize="17sp"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/holo_green_light" />
+
+        <TextView
+            android:text="   do: "
+            android:layout_width="43dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_static_do"
+            android:textSize="17sp" />
+
+        <TextView
+
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_data_stop"
+            android:textSize="17sp"
+            android:textColor="@android:color/holo_red_light"
+            android:textStyle="normal|bold" />
     </LinearLayout>
 
 </LinearLayout>
