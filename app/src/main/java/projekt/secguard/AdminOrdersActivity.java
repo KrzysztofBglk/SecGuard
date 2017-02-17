@@ -2,6 +2,7 @@ package projekt.secguard;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
 
     //TODO ORDER BY LIST VIEW
     private String TAG = AdminOrdersActivity.class.getSimpleName();
-
+    private HashMap<String, String> hMap;
     private ProgressDialog pDialog;
     private ListView  lista;
 
@@ -47,7 +48,12 @@ public class AdminOrdersActivity extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View view,
                                     int position, long id) {
+                 //  int intId = (int)id;
                 Toast.makeText(getApplicationContext(), "ON CLICK: POS" + position + " id " + id, Toast.LENGTH_LONG).show();
+                Intent intentAdminOrdersForLocationActivity = new Intent(getApplicationContext(), AdminOrdersForLocationActivity.class);
+                intentAdminOrdersForLocationActivity.putExtra("locationData", contactList.get((int)id));
+                startActivity(intentAdminOrdersForLocationActivity);
+
             }
         });
 
@@ -115,7 +121,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
 
 
                         // tmp hash map for single contact
-                        HashMap<String, String> hMap = new HashMap<>();
+                        hMap = new HashMap<>();
 
                         // adding each child node to HashMap key => value
                         hMap.put("id_lokacji", id_lokacji);

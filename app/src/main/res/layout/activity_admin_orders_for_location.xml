@@ -10,4 +10,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="projekt.secguard.AdminOrdersForLocationActivity">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_osoba_konakt"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_telefon_kontakt"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="241dp"
+            android:id="@+id/textView33" />
+    </LinearLayout>
+
 </RelativeLayout>

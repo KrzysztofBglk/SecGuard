@@ -59,7 +59,7 @@
 
             <Button
                 android:text="Sprawdz w bazie nazwę"
-                android:layout_width="242dp"
+                android:layout_width="195dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/button_check"
                 android:background="@android:color/darker_gray" />
