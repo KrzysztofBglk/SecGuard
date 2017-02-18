@@ -519,7 +519,7 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                             location.setMiasto(mJsonObject.getString("miasto"));
                             location.setIdTyp(Integer.parseInt(mJsonObject.getString("id_typ")));
                             location.setIdZlec(Integer.parseInt(mJsonObject.getString("id_zleceniodawcy")));
-                            location.setStopDateFromString(mJsonObject.getString("data_start"));
+                            location.setStartDateFromString(mJsonObject.getString("data_start"));
                             location.setStopDateFromString(mJsonObject.getString("data_stop"));
                             location.setIlOchroniarzy(Integer.parseInt(mJsonObject.getString("liczba_ochroniarzy")));
                             location.setStartTimeFromString(mJsonObject.getString("czas_start"));
