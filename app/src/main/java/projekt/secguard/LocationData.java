@@ -23,9 +23,9 @@ public class LocationData implements Serializable{
     private long startGodziny;
     private long stopGodziny;
     private int ilOchroniarzy;
-    private long gps_x;
-    private long gps_y;
-    private long gps_r;
+    private double gps_x;
+    private double gps_y;
+    private double gps_r;
 
     LocationData()
     {
@@ -34,7 +34,7 @@ public class LocationData implements Serializable{
     void setStartDateFromString(String a)
     {
         try {
-        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         Date d = f.parse(a);
         long milliseconds = d.getTime();
             startData = milliseconds;
@@ -46,7 +46,7 @@ public class LocationData implements Serializable{
     void setStopDateFromString(String a)
     {
         try {
-            SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
             Date d = f.parse(a);
             long milliseconds = d.getTime();
             stopData = milliseconds;
@@ -82,13 +82,13 @@ public class LocationData implements Serializable{
 
     String getStringStartDate()
     {
-        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(startData));
+        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(startData));
         return dateString;
     }
 
     String getStringStopDate()
     {
-        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(stopData));
+        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(stopData));
         return dateString;
     }
 
@@ -142,19 +142,19 @@ public class LocationData implements Serializable{
         this.stopGodziny = stopGodziny;
     }
 
-    public long getGps_r() {
+    public double getGps_r() {
         return gps_r;
     }
 
-    public void setGps_r(long gps_r) {
+    public void setGps_r(double gps_r) {
         this.gps_r = gps_r;
     }
 
-    public long getGps_y() {
+    public double getGps_y() {
         return gps_y;
     }
 
-    public void setGps_y(long gps_y) {
+    public void setGps_y(double gps_y) {
         this.gps_y = gps_y;
     }
 
@@ -167,12 +167,12 @@ public class LocationData implements Serializable{
         this.nr_ulicy = nr_ulicy;
     }
 
-    public long getGps_x() {
+    public double getGps_x() {
 
         return gps_x;
     }
 
-    public void setGps_x(long gps_x) {
+    public void setGps_x(double gps_x) {
         this.gps_x = gps_x;
     }
 

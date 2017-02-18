@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -307,8 +308,19 @@ public class AdminEditLocationActivity extends AppCompatActivity {
         if(context_id == 3) {
             single_location_id = ""+locations.get(selector).getId();
             new getSingleLocation().execute();
+            SystemClock.sleep(1000);
 
             edName.setText(location.getNazwa());
+            edStreet.setText(location.getUlica());
+            edStreetNumber.setText(location.getNrUlicy());
+            edCity.setText(location.getMiasto());
+
+            edDateStart.setText(location.getStringStartDate());
+            edDateStop.setText(location.getStringStopDate());
+            textHowManyGuards.setText(""+location.getIlOchroniarzy());
+            textTimeStart.setText(location.getStringStartTime());
+            textTimeStop.setText(location.getStringStopTime());
+
         }
 
         return true;
@@ -496,7 +508,7 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                 HttpHandler getAll = new HttpHandler();
 
                 // hash code zabezpiecza przed wyciekiem danych z serwera
-                String urlCompanyData = "http://185.28.100.205/getAllSingleLocation.php?hashcode=J1f2sa0sdi3Awj349" + "&param=" + single_location_id;
+                String urlCompanyData = "http://185.28.100.205/getAllSingleLocationData.php?hashcode=J1f2sa0sdi3Awj349" + "&param=" + single_location_id;
 
                 // Request na serwer
                 String jsonStr = getAll.makeServiceCall(urlCompanyData);
@@ -524,9 +536,9 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                             location.setIlOchroniarzy(Integer.parseInt(mJsonObject.getString("liczba_ochroniarzy")));
                             location.setStartTimeFromString(mJsonObject.getString("czas_start"));
                             location.setStopTimeFromString(mJsonObject.getString("czas_stop"));
-                            location.setGps_x(Long.parseLong(mJsonObject.getString("gps_x")));
-                            location.setGps_y(Long.parseLong(mJsonObject.getString("gps_y")));
-                            location.setGps_y(Long.parseLong(mJsonObject.getString("gps_r")));
+                            location.setGps_x(Double.parseDouble(mJsonObject.getString("gps_x")));
+                            location.setGps_y(Double.parseDouble(mJsonObject.getString("gps_y")));
+                            location.setGps_y(Double.parseDouble(mJsonObject.getString("gps_r")));
 
 
 
@@ -727,7 +739,7 @@ public class AdminEditLocationActivity extends AppCompatActivity {
             String stopHourString = new SimpleDateFormat("hh:mm:ss").format(new Date(location.getStopGodziny()));
 
 
-            String urlInsert = "http://185.28.100.205/insertLocation.php?nazwa=" + location.getNazwa()
+            String urlInsert = "http://185.28.100.205/chSingleLocation.php?nazwa=" + location.getNazwa()
                     + "&ulica_numer=" + location.getNr_ulicy()
                     + "&ulica=" + location.getUlica()
                     + "&id_typ=" + location.getIdTyp()
@@ -740,7 +752,8 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                     + "&czas_stop=" + stopHourString
                     + "&gps_x=" + location.getGps_x()
                     +  "&gps_y=" + location.getGps_y()
-                    + "&gps_r=" + location.getGps_r();
+                    + "&gps_r=" + location.getGps_r()
+                    + "&id_lok=" + location.getId();
 
             String geting = insert.makeServiceCall(urlInsert);
             Log.e(TAG, "Odebrano: " + geting);
