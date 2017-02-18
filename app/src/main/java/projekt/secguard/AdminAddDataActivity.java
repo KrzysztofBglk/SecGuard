@@ -53,8 +53,8 @@ public class AdminAddDataActivity extends AppCompatActivity {
         menageObjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //intent
+                Intent intentManageLocation = new Intent(getApplicationContext(), AdminEditLocationActivity.class);
+                startActivity(intentManageLocation);
             }
         });
 

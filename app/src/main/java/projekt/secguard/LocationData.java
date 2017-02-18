@@ -1,6 +1,9 @@
 package projekt.secguard;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Dominik on 11.02.2017.
@@ -20,14 +23,89 @@ public class LocationData implements Serializable{
     private long startGodziny;
     private long stopGodziny;
     private int ilOchroniarzy;
-    private int gps_x;
-    private int gps_y;
-    private int gps_r;
+    private long gps_x;
+    private long gps_y;
+    private long gps_r;
 
     LocationData()
     {
 
     }
+
+    void setStartDateFromString(String a)
+    {
+        try {
+        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+        Date d = f.parse(a);
+        long milliseconds = d.getTime();
+            startData = milliseconds;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void setStopDateFromString(String a)
+    {
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+            Date d = f.parse(a);
+            long milliseconds = d.getTime();
+            stopData = milliseconds;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    void setStartTimeFromString(String a)
+    {
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("hh:mm:ss");
+            Date d = f.parse(a);
+            long milliseconds = d.getTime();
+            startGodziny = milliseconds;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void setStopTimeFromString(String a)
+    {
+        try {
+            SimpleDateFormat f = new SimpleDateFormat("hh:mm:ss");
+            Date d = f.parse(a);
+            long milliseconds = d.getTime();
+            stopGodziny = milliseconds;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    String getStringStartDate()
+    {
+        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(startData));
+        return dateString;
+    }
+
+    String getStringStopDate()
+    {
+        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(stopData));
+        return dateString;
+    }
+
+    String getStringStartTime()
+    {
+        String timeString = new SimpleDateFormat("hh:mm").format(new Date(startGodziny));
+        return timeString;
+    }
+
+    String getStringStopTime()
+    {
+        String timeString = new SimpleDateFormat("hh:mm").format(new Date(stopGodziny));
+        return timeString;
+    }
+
+
 
     public int getIdZlec() {
         return idZlec;
@@ -65,19 +143,19 @@ public class LocationData implements Serializable{
         this.stopGodziny = stopGodziny;
     }
 
-    public int getGps_r() {
+    public long getGps_r() {
         return gps_r;
     }
 
-    public void setGps_r(int gps_r) {
+    public void setGps_r(long gps_r) {
         this.gps_r = gps_r;
     }
 
-    public int getGps_y() {
+    public long getGps_y() {
         return gps_y;
     }
 
-    public void setGps_y(int gps_y) {
+    public void setGps_y(long gps_y) {
         this.gps_y = gps_y;
     }
 
@@ -90,12 +168,12 @@ public class LocationData implements Serializable{
         this.nr_ulicy = nr_ulicy;
     }
 
-    public int getGps_x() {
+    public long getGps_x() {
 
         return gps_x;
     }
 
-    public void setGps_x(int gps_x) {
+    public void setGps_x(long gps_x) {
         this.gps_x = gps_x;
     }
 

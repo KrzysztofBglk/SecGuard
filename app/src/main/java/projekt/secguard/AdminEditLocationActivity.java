@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -25,13 +25,14 @@ import java.util.Date;
 
 //todo try i catche na typy inputów
 
-public class AdminAddLocationActivity extends AppCompatActivity {
+public class AdminEditLocationActivity extends AppCompatActivity {
 
     Button button_choice1, button_choice2;
     ProgressDialog pDialog;
     ArrayList<DataHolder> companyData;
     ArrayList<DataTypesHolder> types;
-    private String TAG = AdminAddLocationActivity.class.getSimpleName();
+    ArrayList<LocationData> locations;
+    private String TAG = AdminEditLocationActivity.class.getSimpleName();
     int context_id = 0;
     int selector;
     int guards = 0;
@@ -39,15 +40,17 @@ public class AdminAddLocationActivity extends AppCompatActivity {
     int flagDate;
 
     EditText edName, edStreet, edStreetNumber, edCity, edDateStart, edDateStop;
-    Button buttonOplus, buttonOminus, buttonSetDate, buttonSetDate2, buttonSetStartHour, buttonSetStopHour, buttonAdd;
+    Button buttonOplus, buttonOminus, buttonSetDate, buttonSetDate2, buttonSetStartHour, buttonSetStopHour, buttonAdd, buttonSelectLocation;
     TextView textHowManyGuards, textTimeStart, textTimeStop;
     String type;
     LocationData location = new LocationData();
 
+    String single_location_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_add_location);
+        setContentView(R.layout.activity_admin_edit_location);
 
 
 
@@ -60,6 +63,18 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         edDateStop = (EditText) findViewById(R.id.editText13);
         textTimeStart = (TextView) findViewById(R.id.textView31);
         textTimeStop = (TextView) findViewById(R.id.textView32);
+
+        buttonSelectLocation = (Button) findViewById(R.id.button21);
+        new getAllLocationNames().execute();
+        buttonSelectLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new getAllLocationNames().execute();
+                context_id = 3;
+                registerForContextMenu(buttonSelectLocation);
+                openContextMenu(buttonSelectLocation);
+            }
+        });
 
         button_choice1 = (Button) findViewById(R.id.button5);
         new getType().execute();
@@ -169,11 +184,6 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if(false)
-                //{
-
-
-                //}else{
 
                     location.setNazwa(edName.getText().toString());
                     location.setNr_ulicy(edStreetNumber.getText().toString());
@@ -188,10 +198,6 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                         "Wprowadzono do bazy",
                         Toast.LENGTH_LONG)
                         .show();
-
-
-
-            //}
             }
         });
 
@@ -222,25 +228,17 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                 iterator_id++;
             }
         }
+
+
+        if (context_id == 3) {
+            int iterator_id = 0;
+            menu.setHeaderTitle("Wybierz lokacje");
+            for (LocationData d : locations) {
+                menu.add(0, iterator_id, 0, d.getNazwa());
+                iterator_id++;
+            }
+        }
     }
-
-    /*@Override
-    protected void onResume()
-    {
-        super.onResume();
-        Intent intent = getIntent();
-        if(flagDate == 1) {
-            minDate = intent.getLongExtra("calendarDate", 0L);
-            Log.e(TAG, "Data w intent long: " + minDate);
-            String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(minDate));
-            edDateStart.setText(dateString);
-
-        }
-
-        if(flagDate == 2) {
-            maxDate = getIntent().getLongExtra("calendarDate", 0L);
-        }
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -306,6 +304,13 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             location.setIdZlec(Integer.parseInt(companyData.get(selector).getHold_id()));
         }
 
+        if(context_id == 3) {
+            single_location_id = ""+locations.get(selector).getId();
+            new getSingleLocation().execute();
+
+            edName.setText(location.getNazwa());
+        }
+
         return true;
     }
 
@@ -315,7 +320,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
-            pDialog = new ProgressDialog(AdminAddLocationActivity.this);
+            pDialog = new ProgressDialog(AdminEditLocationActivity.this);
             pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
             //pDialog.show();
@@ -392,13 +397,13 @@ public class AdminAddLocationActivity extends AppCompatActivity {
         }
     }
 
-    private class getCompany extends AsyncTask<Void, Void, Void> {
+    private class getAllLocationNames extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
-            pDialog = new ProgressDialog(AdminAddLocationActivity.this);
+            pDialog = new ProgressDialog(AdminEditLocationActivity.this);
             pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
             //pDialog.show();
@@ -410,15 +415,15 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             HttpHandler getAll = new HttpHandler();
 
             // hash code zabezpiecza przed wyciekiem danych z serwera
-            String urlCompanyData = "http://185.28.100.205/getAllCompany.php?hashcode=J1f2sa0sdi3Awj349";
+            String urlTypesData = "http://185.28.100.205/getAllLocationNames.php?hashcode=J1f2sa0sdi3Awj349";
 
             // Request na serwer
-            String jsonStr = getAll.makeServiceCall(urlCompanyData);
+            String jsonStr = getAll.makeServiceCall(urlTypesData);
 
-            Log.e(TAG, "Odebrano firmy: " + jsonStr);
+            Log.e(TAG, "Odebrano typy: " + jsonStr);
 
             if (jsonStr != null) {
-                companyData = new ArrayList<DataHolder>();
+                locations = new ArrayList<LocationData>();
                 try {
                     JSONArray mJsonArray = new JSONArray(jsonStr);
                     JSONObject mJsonObject = new JSONObject();
@@ -426,17 +431,11 @@ public class AdminAddLocationActivity extends AppCompatActivity {
 
                     for (int i = 0; i < mJsonArray.length(); i++) {
                         mJsonObject = mJsonArray.getJSONObject(i);
-                        String id, n, p, k;
-
-                        id = mJsonObject.getString("id_zleceniodawcy");
-                        n = mJsonObject.getString("nazwa_firmy");
-                        p = mJsonObject.getString("telefon");
-                        k = mJsonObject.getString("osoba_kontakt");
-                        DataHolder d = new DataHolder(id, n, p, k);
-                        companyData.add(d);
+                        LocationData l = new LocationData();
+                        l.setId(Integer.parseInt(mJsonObject.getString("id_lokacje")));
+                        l.setNazwa(mJsonObject.getString("nazwa"));
+                        locations.add(l);
                     }
-
-
 
 
                 } catch (final JSONException e) {
@@ -466,6 +465,100 @@ public class AdminAddLocationActivity extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+        }
+    }
+
+
+
+
+
+    private class getSingleLocation extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
+                pDialog = new ProgressDialog(AdminEditLocationActivity.this);
+                pDialog.setMessage("Przetwarzanie...");
+                pDialog.setCancelable(false);
+                //pDialog.show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... arg0) {
+
+                HttpHandler getAll = new HttpHandler();
+
+                // hash code zabezpiecza przed wyciekiem danych z serwera
+                String urlCompanyData = "http://185.28.100.205/getAllSingleLocation.php?hashcode=J1f2sa0sdi3Awj349" + "&param=" + single_location_id;
+
+                // Request na serwer
+                String jsonStr = getAll.makeServiceCall(urlCompanyData);
+
+                Log.e(TAG, "Odebrano firmy: " + jsonStr);
+
+                if (jsonStr != null) {
+                    try {
+                        JSONArray mJsonArray = new JSONArray(jsonStr);
+                        JSONObject mJsonObject = new JSONObject();
+
+
+
+                            mJsonObject = mJsonArray.getJSONObject(0);
+
+                            location.setId(Integer.parseInt(mJsonObject.getString("id_lokacje")));
+                            location.setNazwa(mJsonObject.getString("nazwa"));
+                            location.setNrUlicy(mJsonObject.getString("ulica_numer"));
+                            location.setUlica(mJsonObject.getString("ulica"));
+                            location.setMiasto(mJsonObject.getString("miasto"));
+                            location.setIdTyp(Integer.parseInt(mJsonObject.getString("id_typ")));
+                            location.setIdZlec(Integer.parseInt(mJsonObject.getString("id_zleceniodawcy")));
+                            location.setStopDateFromString(mJsonObject.getString("data_start"));
+                            location.setStopDateFromString(mJsonObject.getString("data_stop"));
+                            location.setIlOchroniarzy(Integer.parseInt(mJsonObject.getString("liczba_ochroniarzy")));
+                            location.setStartTimeFromString(mJsonObject.getString("czas_start"));
+                            location.setStopTimeFromString(mJsonObject.getString("czas_stop"));
+                            location.setGps_x(Long.parseLong(mJsonObject.getString("gps_x")));
+                            location.setGps_y(Long.parseLong(mJsonObject.getString("gps_y")));
+                            location.setGps_y(Long.parseLong(mJsonObject.getString("gps_r")));
+
+
+
+
+
+                    } catch (final JSONException e) {
+                        Log.e(TAG, "Json parsing error: " + e.getMessage());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Niepoprawne dane logowania",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
+                } else {
+                    Log.e(TAG, "Problem z serwerem.");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Server error, Zobacz LogCat po wiecej informacji",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+                return null;
+            }
 
         @Override
         protected void onPostExecute(Void result) {
@@ -545,6 +638,80 @@ public class AdminAddLocationActivity extends AppCompatActivity {
 
         public void setHold_id(String hold_id) {
             this.hold_id = hold_id;
+        }
+    }
+
+    private class getCompany extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
+            pDialog = new ProgressDialog(AdminEditLocationActivity.this);
+            pDialog.setMessage("Przetwarzanie...");
+            pDialog.setCancelable(false);
+            //pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            HttpHandler getAll = new HttpHandler();
+
+            // hash code zabezpiecza przed wyciekiem danych z serwera
+            String urlCompanyData = "http://185.28.100.205/getAllCompany.php?hashcode=J1f2sa0sdi3Awj349";
+
+            // Request na serwer
+            String jsonStr = getAll.makeServiceCall(urlCompanyData);
+
+            Log.e(TAG, "Odebrano firmy: " + jsonStr);
+
+            if (jsonStr != null) {
+                companyData = new ArrayList<DataHolder>();
+                try {
+                    JSONArray mJsonArray = new JSONArray(jsonStr);
+                    JSONObject mJsonObject = new JSONObject();
+
+
+                    for (int i = 0; i < mJsonArray.length(); i++) {
+                        mJsonObject = mJsonArray.getJSONObject(i);
+                        String id, n, p, k;
+
+                        id = mJsonObject.getString("id_zleceniodawcy");
+                        n = mJsonObject.getString("nazwa_firmy");
+                        p = mJsonObject.getString("telefon");
+                        k = mJsonObject.getString("osoba_kontakt");
+                        DataHolder d = new DataHolder(id, n, p, k);
+                        companyData.add(d);
+                    }
+
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Niepoprawne dane logowania",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } else {
+                Log.e(TAG, "Problem z serwerem.");
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Server error, Zobacz LogCat po wiecej informacji",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+            return null;
         }
     }
 
