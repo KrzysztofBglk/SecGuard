@@ -9,7 +9,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,34 +51,14 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
     ArrayList<Integer>  workers;
     ArrayList<Ochroniarz> listaDostepnych;
     ArrayList<HashMap<String, String>> dayArray;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    int slot;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-
-
-
+        slot = 0;
+        new GetGuardData().execute();
         dayArray = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_orders_for_location);
@@ -102,7 +84,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
         o5.setVisibility(View.INVISIBLE);
         o6.setVisibility(View.INVISIBLE);
 
-        new GetGuardData().execute();
+
 
         kontakt_imie.setText("Kontakt: " + dataMap.get("osoba_kontakt").toString());
         kontakt_telefon.setText("Telefon: " + dataMap.get("telefon").toString());
@@ -115,48 +97,49 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 registerForContextMenu(o1);
                 openContextMenu(o1);
-
-
-
-
-
-
-
-
-
-
-
-
+                slot = 1;
             }
         });
         o2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                registerForContextMenu(o2);
+                openContextMenu(o2);
+                slot = 2;
             }
         });
         o3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                registerForContextMenu(o3);
+                openContextMenu(o3);
+                slot = 3;
             }
         });
         o4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                registerForContextMenu(o4);
+                openContextMenu(o4);
+                slot = 4;
 
             }
         });
         o5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                registerForContextMenu(o5);
+                openContextMenu(o5);
+                slot = 5;
 
             }
         });
         o6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                registerForContextMenu(o6);
+                openContextMenu(o6);
+                slot = 6;
             }
         });
 
@@ -172,6 +155,17 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                 data_zmiany = dayArray.get(position).get("data_zmiany");
                 editedData.setText(data_zmiany);
 
+
+               // new GetGuardData().execute();
+
+
+                o1.setText("Dodaj...");
+                o2.setText("Dodaj...");
+                o3.setText("Dodaj...");
+                o4.setText("Dodaj...");
+                o5.setText("Dodaj...");
+                o6.setText("Dodaj...");
+
                 if(!dayArray.get(position).get("o1").equals("null"))
                 {
                     for(Ochroniarz o : listaDostepnych)
@@ -180,6 +174,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o1.setText(imie + " " + nazwisko);
+                            listaDostepnych.remove(o);
                             break;
                         }
                     }
@@ -193,6 +188,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o2.setText(imie + " " + nazwisko);
+                            listaDostepnych.remove(o);
                             break;
                         }
                     }
@@ -206,6 +202,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o3.setText(imie + " " + nazwisko);
+                            listaDostepnych.remove(o);
                             break;
                         }
                     }
@@ -219,6 +216,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o4.setText(imie + " " + nazwisko);
+                            listaDostepnych.remove(o);
                             break;
                         }
                     }
@@ -232,6 +230,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o5.setText(imie + " " + nazwisko);
+                            listaDostepnych.remove(o);
                             break;
                         }
                     }
@@ -245,15 +244,13 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o6.setText(imie + " " + nazwisko);
+                            listaDostepnych.remove(o);
                             break;
                         }
                     }
                 }
 
-
                 new GetWorker().execute();
-
-
                 switch(liczbaOchrony){
 
                     case 1:
@@ -324,6 +321,65 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Wybierz firme");
+        int iterator_id = 0;
+        for(Ochroniarz ochroniarz: listaDostepnych){
+
+            for(Ochroniarz o: listaDostepnych){
+                if(workers.contains(o.getId()))
+                {
+
+                }
+
+            }
+
+
+
+            menu.add(0, iterator_id, 0,ochroniarz.getImie() + " " + ochroniarz.getNazwisko());
+            iterator_id++;
+        }
+    }
+
+    int selector = 0;
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        selector = item.getItemId();
+
+        switch (slot)
+        {
+            case 1:
+                o1.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                break;
+            case 2:
+                o2.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                break;
+            case 3:
+                o3.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                break;
+            case 4:
+                o4.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                break;
+            case 5:
+                o5.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                break;
+            default:
+                break;
+
+
+
+        }
+        return true;
+    }
+
+
+
+
 
 
 
@@ -451,7 +507,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
     }
 
-
     /**
      *  POBIERZ WSZYSTKICH OCHRONIARZY PRACUJACYCH (zajetych) W TYM DNIU
      */
@@ -507,10 +562,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Pracownicy zajeci error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
+
                         }
                     });
 
@@ -536,11 +588,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
         }
     }
-
-
-
-
-
 
 
 
