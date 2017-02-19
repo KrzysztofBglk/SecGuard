@@ -30,7 +30,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
     private String TAG = AdminOrdersActivity.class.getSimpleName();
     private HashMap<String, String> hMap;
     private ProgressDialog pDialog;
-    private ListView  lista;
+    private ListView lista;
 
     // URL to get contacts JSON
     private static String url = "http://185.28.100.205/getAllLocationData.php?hashcode=J1f2sa0sdi3Awj349";
@@ -53,7 +53,6 @@ public class AdminOrdersActivity extends AppCompatActivity {
                 Intent intentAdminOrdersForLocationActivity = new Intent(getApplicationContext(), AdminOrdersForLocationActivity.class);
                 intentAdminOrdersForLocationActivity.putExtra("locationData", contactList.get((int)id));
                 startActivity(intentAdminOrdersForLocationActivity);
-
             }
         });
 
@@ -73,7 +72,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
             super.onPreExecute();
             // Showing progress dialog
             pDialog = new ProgressDialog(AdminOrdersActivity.this);
-            pDialog.setMessage("Please wait...");
+            pDialog.setMessage("Przetwarzanie...");
             pDialog.setCancelable(false);
             pDialog.show();
 
@@ -86,7 +85,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
+            Log.e(TAG, "Odebrano: " + jsonStr);
 
 
 
