@@ -183,12 +183,15 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                     location.setGps_y(0);
                     location.setGps_r(100);
 
-                    new insertCompany().execute();
-                    Toast.makeText(getApplicationContext(),
-                        "Wprowadzono do bazy",
-                        Toast.LENGTH_LONG)
-                        .show();
+                    if((location.getNazwa().length()>4)&&(location.getUlica().length()>4)&&(location.getMiasto().length()>4)) {
+                        new insertCompany().execute();
+                        new insertLocationDays().execute();
 
+                        Toast.makeText(getApplicationContext(),
+                                "Wprowadzono do bazy",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
 
 
             //}
@@ -577,6 +580,90 @@ public class AdminAddLocationActivity extends AppCompatActivity {
 
             String geting = insert.makeServiceCall(urlInsert);
             Log.e(TAG, "Odebrano: " + geting);
+            return null;
+        }
+    }
+
+    private class insertLocationDays extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler insert = new HttpHandler();
+            String id = "0";
+
+
+            HttpHandler getAll = new HttpHandler();
+
+            // hash code zabezpiecza przed wyciekiem danych z serwera
+            String urlCompanyData = "http://185.28.100.205/getLocationId.php?hashcode=J1f2sa0sdi3Awj349"+"&param="+location.getNazwa();
+
+            // Request na serwer
+            String jsonStr = getAll.makeServiceCall(urlCompanyData);
+
+            Log.e(TAG, "Odebrano lokację: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONArray mJsonArray = new JSONArray(jsonStr);
+                    JSONObject mJsonObject = new JSONObject();
+                        mJsonObject = mJsonArray.getJSONObject(0);
+
+                        id = mJsonObject.getString("id_lokacje");
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Niepoprawne dane logowania",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } else {
+                Log.e(TAG, "Problem z serwerem.");
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Server error, Zobacz LogCat po wiecej informacji",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+
+
+            String startDateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(location.getStartData()));
+            String stopDateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(location.getStopData()));
+            String startHourString = new SimpleDateFormat("hh:mm:ss").format(new Date(location.getStartGodziny()));
+            String stopHourString = new SimpleDateFormat("hh:mm:ss").format(new Date(location.getStopGodziny()));
+
+            Long singleDay = location.getStartData();
+            Long singleDayStop = location.getStopData();
+            String insertedDay = "xxx";
+
+            Boolean flag = false;
+            for(;;)
+            {
+                if(insertedDay.compareTo(stopDateString)==0)
+                    break;
+
+                insertedDay = new SimpleDateFormat("yyyy-MM-dd").format(new Date(singleDay));
+                System.out.print(insertedDay);
+                String urlInsert = "http://185.28.100.205/insertLocationDay.php?id_lokacje=" + id
+                        + "&data_zmiany=" + insertedDay;
+                String geting = insert.makeServiceCall(urlInsert);
+                Log.e(TAG, "Odebrano: " + geting);
+
+
+                singleDay+=(1000 * 60 * 60 * 24);
+            }
+
+
+
             return null;
         }
     }
