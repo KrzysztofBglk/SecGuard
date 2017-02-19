@@ -249,14 +249,14 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     if(flagDate == 1) {
                         Long newData = data.getLongExtra("calendarData", 0L);
-                        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(newData));
+                        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(newData));
                         edDateStart.setText(dateString);
                         minDate = newData;
                         location.setStartData(newData);
                     }
                     if(flagDate == 2) {
                         Long newData = data.getLongExtra("calendarData", 0L);
-                        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(newData));
+                        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(newData));
                         edDateStop.setText(dateString);
                         maxDate = newData;
                         location.setStopData(newData);

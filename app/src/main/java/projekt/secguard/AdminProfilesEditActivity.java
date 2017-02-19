@@ -1,5 +1,6 @@
 package projekt.secguard;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AdminProfilesEditActivity extends AppCompatActivity {
 
@@ -51,25 +55,31 @@ public class AdminProfilesEditActivity extends AppCompatActivity {
         buttonUsersList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ProfileListViewActivity.class);
-                i.putExtra("userData", userData);
-                startActivity(i);
+                Intent intent = new Intent(getApplicationContext(), ProfileListViewActivity.class);
+                intent.putExtra("userData", userData);
+                startActivityForResult(intent, 1);
             }
         });
 
 
         }
 
-    protected void onResume()
-    {
-        super.onResume();
-        Intent intent = getIntent();
-        userData = (UserData) intent.getExtras().getSerializable("userData");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (1) : {
+                if (resultCode == Activity.RESULT_OK) {
 
-        userLogin.setText(userData.getLogin());
-        userName.setText(userData.getImie()+" "+userData.getNazwisko());
-        userRank.setText(userData.getPozycja());
+                        userData = (UserData) data.getExtras().getSerializable("userData");
+                        userLogin.setText(userData.getLogin());
+                        userName.setText(userData.getImie()+" "+userData.getNazwisko());
+                        userRank.setText(userData.getPozycja());
 
+                }
+                break;
+            }
 
+        }
     }
 }

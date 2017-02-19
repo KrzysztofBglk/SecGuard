@@ -31,6 +31,7 @@ public class LocationData implements Serializable{
     {
 
     }
+
     void setStartDateFromString(String a)
     {
         try {

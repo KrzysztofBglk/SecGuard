@@ -35,7 +35,7 @@ public class CalendarViewActivity extends AppCompatActivity {
                 int m = month;
                 int y = year;
                 sDate = d+"/"+m+"/"+y;
-                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     Date dat = f.parse(sDate);
                     selectedDate = dat.getTime();

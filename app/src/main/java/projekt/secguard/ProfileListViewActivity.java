@@ -1,5 +1,6 @@
 package projekt.secguard;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -190,8 +191,10 @@ public class ProfileListViewActivity extends AppCompatActivity {
                     //
                     //
                     //
-                    Intent intent = new Intent(getApplicationContext(), AdminProfilesEditActivity.class);
-                    intent.putExtra("userData", data);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("userData", data);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
 
 
 
