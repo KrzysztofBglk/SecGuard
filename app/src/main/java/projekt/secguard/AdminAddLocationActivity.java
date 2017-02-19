@@ -657,7 +657,7 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                         + "&data_zmiany=" + insertedDay;
                 String geting = insert.makeServiceCall(urlInsert);
                 Log.e(TAG, "Odebrano: " + geting);
-                
+
 
                 singleDay+=(1000 * 60 * 60 * 24);
             }
