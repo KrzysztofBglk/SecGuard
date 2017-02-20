@@ -24,6 +24,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ *
+ *  Activity dla zarzadzania firmą dla menagera
+ *
+ */
 public class AdminOrdersActivity extends AppCompatActivity {
 
     //TODO ORDER BY LIST VIEW
@@ -88,7 +93,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
             Log.e(TAG, "Odebrano: " + jsonStr);
 
 
-
+            // parsing data
 
             if (jsonStr != null) {
                           //  companyData = new ArrayList<DataHolder>();

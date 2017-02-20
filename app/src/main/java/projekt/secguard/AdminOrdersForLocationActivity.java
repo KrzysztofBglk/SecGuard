@@ -2,7 +2,7 @@ package projekt.secguard;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class AdminOrdersForLocationActivity extends AppCompatActivity {
@@ -203,7 +200,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                                     int position, long id) {
                 data_zmiany = dayArray.get(position).get("data_zmiany");
                 editedData.setText(data_zmiany);
-              //  new GetWorker().execute();
                 new GetGuardData().execute();
 
 
@@ -223,7 +219,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o1.setText(imie + " " + nazwisko);
-                           // id1=Integer.parseInt(dayArray.get(position).get("o1"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -238,7 +233,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o2.setText(imie + " " + nazwisko);
-                           // id2=Integer.parseInt(dayArray.get(position).get("o2"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -253,7 +247,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o3.setText(imie + " " + nazwisko);
-                          //  id3=Integer.parseInt(dayArray.get(position).get("o3"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -268,7 +261,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o4.setText(imie + " " + nazwisko);
-                           // id4=Integer.parseInt(dayArray.get(position).get("o4"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -283,7 +275,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o5.setText(imie + " " + nazwisko);
-                            //id5=Integer.parseInt(dayArray.get(position).get("o5"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -298,7 +289,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o6.setText(imie + " " + nazwisko);
-                          //  id6=Integer.parseInt(dayArray.get(position).get("o6"));
+
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -372,7 +363,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                         break;
                 }
 
-                //Toast.makeText(getApplicationContext(), "ON CLICK: POS" + position + " id " + id, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -437,10 +427,6 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
 
 
-
-
-
-
     /**
      *  POBIERZ DANE O GRAFIKU DANEJ LOKACJI
      */
@@ -464,7 +450,8 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
             // hash code zabezpiecza przed wyciekiem danych z serwera
             String url = "http://185.28.100.205/getOrdersForLocation.php?hashcode=J1f2sa0sdi3Awj349&idLokacji=";
             url = url + id_lokacji;
-            // Making a request to url and getting response
+
+            // Making a request
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Odebrano: " + jsonStr);
@@ -479,7 +466,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
 
                     for(int i = 0 ; i < mJsonArray.length() ; i++) {
-                        //  mJsonObject =
+
                         JSONObject o = mJsonArray.getJSONObject(i);
 
                         String id_grafik_lokacji= o.getString("id_grafik_lokacji");
@@ -549,7 +536,8 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            // Dismiss the progress dialog
+
+            // wylacz progres dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
@@ -565,92 +553,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
     }
 
-    /**----------------------------------------------------------------------------------------------------------------------------
-     *  POBIERZ WSZYSTKICH OCHRONIARZY PRACUJACYCH (zajetych) W TYM DNIU
-     */
-    /*
-    private class GetWorker extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(AdminOrdersForLocationActivity.this);
-            pDialog.setMessage("Przetwarzanie...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            HttpHandler sh = new HttpHandler();
-
-
-            // hash code zabezpiecza przed wyciekiem danych z serwera
-            String check_guard_duplication = "http://185.28.100.205/getAvailableGuards.php?";
-            check_guard_duplication = check_guard_duplication + data_zmiany;
-
-            String jsonStr_ch_guard = sh.makeServiceCall(check_guard_duplication);
-
-
-            workers = new ArrayList<Integer>();
-            workers.add(0);
-
-            if (jsonStr_ch_guard != null) {
-                //  companyData = new ArrayList<DataHolder>();
-                try {
-                    JSONArray mJsonArray_ch_guard = new JSONArray(jsonStr_ch_guard);
-
-                    // JSONObject mJsonObject = new JSONObject();
-
-
-                    for(int i = 0 ; i < mJsonArray_ch_guard.length() ; i++) {
-                        //  mJsonObject =
-                        JSONObject o = mJsonArray_ch_guard.getJSONObject(i);
-
-                        if(!o.getString("ochrona").equals("null"))
-                        {
-                            int ochrona_id= Integer.parseInt(o.getString("ochrona"));
-                            workers.add(ochrona_id);
-
-                        }
-
-                    }
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Pracownicy zajeci error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                        }
-                    });
-
-                }
-            } else {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-
-        }
-    }
-//-------------------------------------------------------------------------------------------
-
-*/
 
     /**
      *  POBIERZ AKTYWNYCH PRACOWNIKÓW

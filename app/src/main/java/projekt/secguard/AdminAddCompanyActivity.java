@@ -136,6 +136,7 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             // Dialog oczekiwania na polaczenie i sprawdzenie danych z serwerm
             pDialog = new ProgressDialog(AdminAddCompanyActivity.this);
             pDialog.setMessage("Przetwarzanie...");
@@ -155,7 +156,8 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
             Log.e(TAG, "Odebrano: " + jsonStr);
 
             if (jsonStr != null) {
-                 companyNames = new ArrayList<String>(); // nowa array lista dla każdego zapytania żeby się odświeżyło
+                // new array list
+                 companyNames = new ArrayList<String>();
                 try {
                     JSONArray mJsonArray = new JSONArray(jsonStr);
                     JSONObject mJsonObject = new JSONObject();

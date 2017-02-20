@@ -60,8 +60,11 @@ public class UserScreenActivity extends AppCompatActivity {
         if(userData.getLogin().equals("bozena")){
             avatar.setImageResource(R.drawable.avatar_bozena);
         }
-        if(userData.getLogin().equals("mar")){
+        if(userData.getLogin().equals("grzegorz")){
             avatar.setImageResource(R.drawable.avatar_grzegorz);
+        }
+        if(userData.getLogin().equals("daniel")){
+            avatar.setImageResource(R.drawable.avatar_daniel);
         }
 
 

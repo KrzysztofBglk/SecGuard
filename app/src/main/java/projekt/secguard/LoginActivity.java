@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             // Request na serwer
             String jsonStr = sh.makeServiceCall(url);
 
-            //Log.e(TAG, "Odebrano: " + jsonStr);
+
 
                 if (jsonStr != null) {
                     try {

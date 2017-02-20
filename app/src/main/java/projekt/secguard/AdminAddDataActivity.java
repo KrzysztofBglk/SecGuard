@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 
-//TODO NAPISAC PHP ODEBRAC JSON
 
 /**
  * Kasa dodajaca nowe firmy do bazy danych dla których można wykonywać zlecenia
