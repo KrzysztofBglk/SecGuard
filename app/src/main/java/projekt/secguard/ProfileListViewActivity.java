@@ -194,7 +194,7 @@ public class ProfileListViewActivity extends AppCompatActivity {
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("userData", data);
                     setResult(Activity.RESULT_OK, resultIntent);
-                    finish();
+
 
 
 

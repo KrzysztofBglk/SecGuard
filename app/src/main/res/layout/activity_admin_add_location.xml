@@ -162,7 +162,8 @@
                 android:inputType="date"
                 android:ems="10"
                 android:id="@+id/editText9"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:enabled="false" />
 
             <Button
                 android:text="Ustaw datę"

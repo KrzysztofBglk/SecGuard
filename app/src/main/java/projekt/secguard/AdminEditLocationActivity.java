@@ -65,6 +65,9 @@ public class AdminEditLocationActivity extends AppCompatActivity {
         textTimeStart = (TextView) findViewById(R.id.textView31);
         textTimeStop = (TextView) findViewById(R.id.textView32);
 
+        edDateStart.setFocusable(false);
+        edDateStop.setFocusable(false);
+
         buttonSelectLocation = (Button) findViewById(R.id.button21);
         new getAllLocationNames().execute();
         buttonSelectLocation.setOnClickListener(new View.OnClickListener() {
@@ -194,11 +197,13 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                     location.setGps_y(0);
                     location.setGps_r(100);
 
+                if((location.getNazwa().length()>2)&&(location.getUlica().length()>2)&&(location.getMiasto().length()>2)&&(location.getNrUlicy().length()>0)) {
                     new insertCompany().execute();
                     Toast.makeText(getApplicationContext(),
-                        "Wprowadzono do bazy",
-                        Toast.LENGTH_LONG)
-                        .show();
+                            "Wprowadzono do bazy",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         });
 

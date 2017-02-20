@@ -50,7 +50,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="38dp">
+            android:layout_height="49dp">
 
             <TextView
                 android:text="Ulica"
@@ -92,8 +92,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="0.11">
+            android:layout_height="48dp">
 
             <TextView
                 android:text="Miasto"
