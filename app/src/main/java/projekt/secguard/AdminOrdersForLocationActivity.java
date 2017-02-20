@@ -2,8 +2,7 @@ package projekt.secguard;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-
-import android.content.Context;
+;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -35,16 +34,18 @@ import java.util.HashMap;
 
 public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
-
+    String data_string;
     private String TAG = AdminOrdersForLocationActivity.class.getSimpleName();
     HashMap<String, String> dataMap = new HashMap<>();
     private HashMap<String, String> hMap;
     TextView kontakt_imie;
     Button o1,o2,o3,o4,o5,o6;
+    Button button_wyslij;
     TextView kontakt_telefon;
     TextView editedData;
     String data_zmiany;
     String id_lokacji;
+    String temp_lokacja;
     private ProgressDialog pDialog,pDialog2;
     int liczbaOchrony;
     ListView lv;
@@ -53,6 +54,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> dayArray;
     int slot;
 
+    int id1,id2,id3,id4,id5,id6;
 
 
     @Override
@@ -67,9 +69,11 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
         dataMap = (HashMap) intent.getExtras().getSerializable("locationData");
         id_lokacji = dataMap.get("id_lokacji");
+        temp_lokacja = dataMap.get("id_lokacji");
         kontakt_imie = (TextView) findViewById(R.id.tv_osoba_konakt);
         kontakt_telefon = (TextView) findViewById(R.id.tv_telefon_kontakt);
         editedData = (TextView)findViewById(R.id.tvl_data);
+        button_wyslij = (Button)findViewById(R.id.button_wyslij);
         o1 = (Button) findViewById(R.id.button_o1);
         o2 = (Button) findViewById(R.id.button_o2);
         o3 = (Button) findViewById(R.id.button_o3);
@@ -88,6 +92,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
         kontakt_imie.setText("Kontakt: " + dataMap.get("osoba_kontakt").toString());
         kontakt_telefon.setText("Telefon: " + dataMap.get("telefon").toString());
+        String id_lokacji =  dataMap.get("telefon").toString();
         liczbaOchrony =  Integer.parseInt(dataMap.get("liczba_ochroniarzy"));
 
 
@@ -144,9 +149,53 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
         });
 
 
+        button_wyslij.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(liczbaOchrony == 1){
+                    data_string = "&id="+ temp_lokacja+"&liczbaOchrony="+liczbaOchrony+"&id1="+id1;
+                    new insert().execute();
+
+                }
+                if(liczbaOchrony == 2){
+                    if(id1 != id2) {
+                    data_string = "&id="+temp_lokacja+"&liczbaOchrony="+liczbaOchrony+"&id1="+id1+"&id2="+id2;
+                        new insert().execute();
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Bląd, duplikacja pracowników", Toast.LENGTH_LONG).show();
+                    }
+                }
+                if(liczbaOchrony == 3){
+                    if((id1 != id2) ||( id2 != id3) ) {
+                    data_string = "&id="+temp_lokacja+"&liczbaOchrony="+liczbaOchrony+"&id1="+id1+"&id2="+id2+"&id3="+id3;
+                        new insert().execute();
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Bląd, duplikacja pracowników", Toast.LENGTH_LONG).show();
+                    }
+                }
+                if(liczbaOchrony == 4){
+                    data_string = "&id="+temp_lokacja+"&liczbaOchrony="+liczbaOchrony+"&id1="+id1+"&id2="+id2+"&id3="+id3+"&id4="+id4;
+                    new insert().execute();
+
+                }
+                if(liczbaOchrony == 5){
+                    data_string ="&id="+temp_lokacja+"&liczbaOchrony="+liczbaOchrony+"&id1="+id1+"&id2="+id2+"&id3="+id3+"&id4="+id4+"&id5="+id5;
+                    new insert().execute();
+
+                }
+                if(liczbaOchrony == 6){
+                    data_string = "&id="+temp_lokacja+"&liczbaOchrony="+liczbaOchrony+"&id1="+id1+"&id2="+id2+"&id3="+id3+"&id4="+id4+"&id5="+id5+"&id6="+id6;
+                    new insert().execute();
+
+                }
+
+
+            }
+        });
+
         new GetData().execute();
-
-
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,9 +203,9 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                                     int position, long id) {
                 data_zmiany = dayArray.get(position).get("data_zmiany");
                 editedData.setText(data_zmiany);
+              //  new GetWorker().execute();
+                new GetGuardData().execute();
 
-
-               // new GetGuardData().execute();
 
 
                 o1.setText("Dodaj...");
@@ -174,6 +223,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o1.setText(imie + " " + nazwisko);
+                           // id1=Integer.parseInt(dayArray.get(position).get("o1"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -188,6 +238,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o2.setText(imie + " " + nazwisko);
+                           // id2=Integer.parseInt(dayArray.get(position).get("o2"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -202,6 +253,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o3.setText(imie + " " + nazwisko);
+                          //  id3=Integer.parseInt(dayArray.get(position).get("o3"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -216,6 +268,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o4.setText(imie + " " + nazwisko);
+                           // id4=Integer.parseInt(dayArray.get(position).get("o4"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -230,6 +283,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o5.setText(imie + " " + nazwisko);
+                            //id5=Integer.parseInt(dayArray.get(position).get("o5"));
                             listaDostepnych.remove(o);
                             break;
                         }
@@ -244,13 +298,14 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                             String imie = o.getImie();
                             String nazwisko = o.getNazwisko();
                             o6.setText(imie + " " + nazwisko);
+                          //  id6=Integer.parseInt(dayArray.get(position).get("o6"));
                             listaDostepnych.remove(o);
                             break;
                         }
                     }
                 }
 
-                new GetWorker().execute();
+
                 switch(liczbaOchrony){
 
                     case 1:
@@ -317,7 +372,7 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                         break;
                 }
 
-                Toast.makeText(getApplicationContext(), "ON CLICK: POS" + position + " id " + id, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "ON CLICK: POS" + position + " id " + id, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -327,23 +382,17 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Wybierz firme");
+        menu.setHeaderTitle("Wybierz ");
         int iterator_id = 0;
+
         for(Ochroniarz ochroniarz: listaDostepnych){
-
-            for(Ochroniarz o: listaDostepnych){
-                if(workers.contains(o.getId()))
-                {
-
-                }
-
-            }
-
 
 
             menu.add(0, iterator_id, 0,ochroniarz.getImie() + " " + ochroniarz.getNazwisko());
             iterator_id++;
         }
+
+
     }
 
     int selector = 0;
@@ -355,18 +404,27 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
         {
             case 1:
                 o1.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                id1=listaDostepnych.get(selector).getId();
                 break;
             case 2:
                 o2.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                id2=listaDostepnych.get(selector).getId();
                 break;
             case 3:
                 o3.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                id3=listaDostepnych.get(selector).getId();
                 break;
             case 4:
                 o4.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                id4=listaDostepnych.get(selector).getId();
                 break;
             case 5:
                 o5.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                id5=listaDostepnych.get(selector).getId();
+                break;
+            case 6:
+                o6.setText(listaDostepnych.get(selector).getImie() + " " + listaDostepnych.get(selector).getNazwisko());
+                id5=listaDostepnych.get(selector).getId();
                 break;
             default:
                 break;
@@ -507,9 +565,10 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
     }
 
-    /**
+    /**----------------------------------------------------------------------------------------------------------------------------
      *  POBIERZ WSZYSTKICH OCHRONIARZY PRACUJACYCH (zajetych) W TYM DNIU
      */
+    /*
     private class GetWorker extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -527,27 +586,28 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
 
-            // hash code zabezpiecza przed wyciekiem danych z serwera
-            String get_data_guards = "http://185.28.100.205/getAvailableGuards.php?hashcode=J1f2sa0sdi3Awj349&data=";
-            get_data_guards = get_data_guards + data_zmiany;
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(get_data_guards);
 
-            Log.e(TAG, "Odebrano: " + jsonStr);
+            // hash code zabezpiecza przed wyciekiem danych z serwera
+            String check_guard_duplication = "http://185.28.100.205/getAvailableGuards.php?";
+            check_guard_duplication = check_guard_duplication + data_zmiany;
+
+            String jsonStr_ch_guard = sh.makeServiceCall(check_guard_duplication);
+
+
             workers = new ArrayList<Integer>();
             workers.add(0);
 
-            if (jsonStr != null) {
+            if (jsonStr_ch_guard != null) {
                 //  companyData = new ArrayList<DataHolder>();
                 try {
-                    JSONArray mJsonArray = new JSONArray(jsonStr);
+                    JSONArray mJsonArray_ch_guard = new JSONArray(jsonStr_ch_guard);
 
                     // JSONObject mJsonObject = new JSONObject();
 
 
-                    for(int i = 0 ; i < mJsonArray.length() ; i++) {
+                    for(int i = 0 ; i < mJsonArray_ch_guard.length() ; i++) {
                         //  mJsonObject =
-                        JSONObject o = mJsonArray.getJSONObject(i);
+                        JSONObject o = mJsonArray_ch_guard.getJSONObject(i);
 
                         if(!o.getString("ochrona").equals("null"))
                         {
@@ -588,9 +648,9 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
 
         }
     }
+//-------------------------------------------------------------------------------------------
 
-
-
+*/
 
     /**
      *  POBIERZ AKTYWNYCH PRACOWNIKÓW
@@ -679,6 +739,216 @@ public class AdminOrdersForLocationActivity extends AppCompatActivity {
                 pDialog2.dismiss();
         }
     }
+
+
+    /**
+     *  \ pracownikow w danym dniu
+     */
+
+    private class insert extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... arg0)
+        {
+            HttpHandler insert = new HttpHandler();
+          //  HttpHandler sh = new HttpHandler();
+
+
+// hash code zabezpiecza przed wyciekiem danych z serwera
+            String check_guard_duplication = "http://185.28.100.205/getAvailableGuards.php?hashcode=J1f2sa0sdi3Awj349&data=";
+            check_guard_duplication = check_guard_duplication + data_zmiany;
+
+            String jsonStr_ch_guard = insert.makeServiceCall(check_guard_duplication);
+
+
+            workers = new ArrayList<Integer>();
+            workers.add(0);
+
+            if (jsonStr_ch_guard != null)
+            {
+                //  companyData = new ArrayList<DataHolder>();
+                try {
+
+
+
+
+                    if(!jsonStr_ch_guard.startsWith("n")){
+                        JSONArray mJsonArray_ch_guard = new JSONArray(jsonStr_ch_guard);
+
+                        // JSONObject mJsonObject = new JSONObject();
+
+
+                        for (int i = 0; i < mJsonArray_ch_guard.length(); i++) {
+                            //  mJsonObject =
+                            JSONObject o = mJsonArray_ch_guard.getJSONObject(i);
+
+                            if (!o.getString("ochrona").equals("null")) {
+                                int ochrona_id = Integer.parseInt(o.getString("ochrona"));
+                                workers.add(ochrona_id);
+
+                            }
+                        }
+                    }
+
+
+
+
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Pracownicy zajeci error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                        }
+                    });
+                }
+            }
+           switch (liczbaOchrony){
+               case 1:
+                   if(!workers.contains(id1))
+                   {
+                       String urlInsert = "http://185.28.100.205/insertGuards.php?data=" + data_zmiany + data_string;
+                       String geting = insert.makeServiceCall(urlInsert);
+                       Log.e(TAG, "Odebrano: " + geting);
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wysłano do bazy", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }else{
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wybrani pracownicy są zajęci", Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   }
+                   break;
+               case 2:
+                   if(!(workers.contains(id1)||workers.contains(id2)))
+                   {
+                       String urlInsert = "http://185.28.100.205/insertGuards.php?data=" + data_zmiany + data_string;
+                       String geting = insert.makeServiceCall(urlInsert);
+                       Log.e(TAG, "Odebrano: " + geting);
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wysłano do bazy", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }else{
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wybrani pracownicy są zajęci", Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   }
+                   break;
+               case 3:
+                   if(!(workers.contains(id1)||workers.contains(id2)||workers.contains(id3)))
+                   {
+                       String urlInsert = "http://185.28.100.205/insertGuards.php?data=" + data_zmiany + data_string;
+                       String geting = insert.makeServiceCall(urlInsert);
+                       Log.e(TAG, "Odebrano: " + geting);
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wysłano do bazy", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }else{
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wybrani pracownicy są zajęci", Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   }
+                   break;
+               case 4:
+                   if(!(workers.contains(id1)||workers.contains(id2)||workers.contains(id3)||workers.contains(id4)))
+                   {
+                       String urlInsert = "http://185.28.100.205/insertGuards.php?data=" + data_zmiany + data_string;
+                       String geting = insert.makeServiceCall(urlInsert);
+                       Log.e(TAG, "Odebrano: " + geting);
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wysłano do bazy", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }else{
+
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wybrani pracownicy są zajęci", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }
+                   break;
+               case 5:
+                   if(!(workers.contains(id1)||workers.contains(id2)||workers.contains(id3)||workers.contains(id4)||workers.contains(id5)))
+                   {
+                       String urlInsert = "http://185.28.100.205/insertGuards.php?data=" + data_zmiany + data_string;
+                       String geting = insert.makeServiceCall(urlInsert);
+                       Log.e(TAG, "Odebrano: " + geting);
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wysłano do bazy", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }else{
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wybrani pracownicy są zajęci", Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   }
+                   break;
+               case 6:
+                   if(!(workers.contains(id1)||workers.contains(id2)||workers.contains(id3)||workers.contains(id4)||workers.contains(id5)||workers.contains(id6)))
+                   {
+                       String urlInsert = "http://185.28.100.205/insertGuards.php?data=" + data_zmiany + data_string;
+                       String geting = insert.makeServiceCall(urlInsert);
+                       Log.e(TAG, "Odebrano: " + geting);
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wysłano do bazy", Toast.LENGTH_LONG).show();
+                           }
+                       });
+
+                   }else{
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "Wybrani pracownicy są zajęci", Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   }
+                   break;
+               default:
+                   break;
+
+           }
+
+
+            return null;
+        }
+    }
+
+
 
 
     /**

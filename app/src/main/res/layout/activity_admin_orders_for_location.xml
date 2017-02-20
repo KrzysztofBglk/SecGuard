@@ -80,6 +80,12 @@
                 android:textSize="20sp" />
 
             <Button
+                android:text="Wyślij do bazy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_wyslij" />
+
+            <Button
                 android:text="Dodaj..."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
