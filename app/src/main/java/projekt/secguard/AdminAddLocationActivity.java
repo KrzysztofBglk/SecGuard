@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -194,6 +195,9 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                                 "Wprowadzono do bazy",
                                 Toast.LENGTH_LONG)
                                 .show();
+                        
+                        SystemClock.sleep(1000);
+                        finish();
                     }
 
 
@@ -360,8 +364,6 @@ public class AdminAddLocationActivity extends AppCompatActivity {
                         DataTypesHolder d = new DataTypesHolder(id, n);
                         types.add(d);
                     }
-
-
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
