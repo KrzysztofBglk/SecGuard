@@ -203,6 +203,9 @@ public class AdminEditLocationActivity extends AppCompatActivity {
                             "Wprowadzono do bazy",
                             Toast.LENGTH_LONG)
                             .show();
+
+                    SystemClock.sleep(1000);
+                    finish();
                 }
             }
         });

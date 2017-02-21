@@ -41,7 +41,8 @@
         <activity android:name=".CalendarViewActivity" />
         <activity android:name=".AdminEditLocationActivity" />
         <activity android:name=".TimeActivity" />
-        <activity android:name=".AdminOrdersForLocationActivity"></activity>
+        <activity android:name=".AdminOrdersForLocationActivity" />
+        <activity android:name=".MapViewActivity"></activity>
     </application>
 
 </manifest>
