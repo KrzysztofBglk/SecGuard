@@ -84,7 +84,7 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
 
 
                 // phone validator
-                if((get_telefon.length() != 9 || get_telefon.length() != 7) && numeric(get_telefon) != 1){
+                if(get_telefon.length() != 9 && numeric(get_telefon) != 1){
 
                         telefon.setText("");
                         Toast.makeText(getApplicationContext(),
@@ -106,6 +106,13 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
                     }else if(get_nazwa.length() == 0){
                         Toast.makeText(getApplicationContext(),
                                 "Wprowadz nazwe firmy " + get_nazwa,
+                                Toast.LENGTH_LONG)
+                                .show();
+
+                        // kontakt walidator
+                    }else if(!get_nazwa.matches("[a-zA-Z_\\s]+")){
+                        Toast.makeText(getApplicationContext(),
+                                "Niedozwolone znaki w nazwie firmy " + get_nazwa,
                                 Toast.LENGTH_LONG)
                                 .show();
 
