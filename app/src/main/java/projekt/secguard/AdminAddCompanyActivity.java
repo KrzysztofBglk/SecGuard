@@ -84,7 +84,7 @@ public class AdminAddCompanyActivity extends AppCompatActivity {
 
 
                 // phone validator
-                if(get_telefon.length() != 9 && numeric(get_telefon) != 1){
+                if(get_telefon.length() != 9 || numeric(get_telefon) != 1){
 
                         telefon.setText("");
                         Toast.makeText(getApplicationContext(),
