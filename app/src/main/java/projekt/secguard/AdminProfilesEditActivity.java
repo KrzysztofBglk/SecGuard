@@ -94,7 +94,7 @@ public class AdminProfilesEditActivity extends AppCompatActivity {
         buttonEdPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (passwordConditions(edPassCurrent.getText().toString(), edPass.getText().toString())) {
+                if (passwordConditions(edPass.getText().toString())) {
                     //Wysłanie polecenia zmiany bieżącego hasła konta(nowe hasło to wartość pola edPass
 
                     url = "http://185.28.100.205/ch_pass.php?login=";
@@ -372,51 +372,7 @@ public class AdminProfilesEditActivity extends AppCompatActivity {
             // Request na serwer
             String jsonStr = sh.makeServiceCall(url);
 
-            //Log.e(TAG, "Odebrano: " + jsonStr);
 
-            if (jsonStr != null) {
-                try {
-
-                    // Przetwarzanie JSON => UserData.class
-                    JSONArray daneUsera = new JSONArray(jsonStr);
-                    JSONObject o = daneUsera.getJSONObject(0); // 0 or 1
-
-                    String id = o.getString("id_user");
-                    String login = o.getString("login");
-                    String haslo = o.getString("haslo");
-                    String imie = o.getString("imie");
-                    String nazwisko = o.getString("nazwisko");
-                    String pozycja = o.getString("pozycja");
-                    String status = o.getString("status");
-                    UserData data = new UserData(Integer.parseInt(id), login, haslo, imie, nazwisko, pozycja, Boolean.parseBoolean(status));
-
-
-
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Niepoprawne dane logowania 2",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-                }
-            } else {
-                Log.e(TAG, "Problem z serwerem.");
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Server error, Zobacz LogCat po wiecej informacji",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-            }
             return null;
         }
 
@@ -430,15 +386,9 @@ public class AdminProfilesEditActivity extends AppCompatActivity {
         }
     }
 
-    Boolean passwordConditions(String currentPass, String newPass) //warunki określające prawidłową formę hasła - jeżeli wszystko zostanie spełnione zostanie zwrócona wartość true i zostanie umożliwione wciśnięcie przycisku powodującego edycję i wysłanie polecenia SQL
+    Boolean passwordConditions(String newPass) //warunki określające prawidłową formę hasła - jeżeli wszystko zostanie spełnione zostanie zwrócona wartość true i zostanie umożliwione wciśnięcie przycisku powodującego edycję i wysłanie polecenia SQL
     {
-        if (currentPass.compareTo(newPass) == 0) {
-            Toast.makeText(getApplicationContext(),
-                    "Hasła nie różnią się.",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return false;
-        }
+
 
         if (newPass.length() < 5) {
             Toast.makeText(getApplicationContext(),
@@ -449,14 +399,7 @@ public class AdminProfilesEditActivity extends AppCompatActivity {
         }
 
 
-        //Jeżeli hasło wpisane w polu aktualne hasło nie zgadza się z hasłem aktualnie zalogowanego użytkownika, zwróć false
-        if (currentPass.compareTo(userData.getHaslo()) != 0){
-            Toast.makeText(getApplicationContext(),
-                    "Niepoprawne hasło bieżące.",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return false;
-        }
+
 
 
         return true;
